@@ -1,9 +1,30 @@
 import { gql } from "@apollo/client";
 import createApolloClient from "./apollo-client";
-import { Cart, Order, Product } from "./definitions";
+import { Cart, Category, Metadata, Order, Product } from "./definitions";
 import { CART_FRAGMENT, ORDER_FRAGMENT, PRODUCT_FRAGMENT } from "./queries";
 
 const client = createApolloClient();
+
+export async function getCategories(): Promise<Category[]> {
+  const result = await client.query<{ metadata: Metadata }>({
+    query: gql`
+      {
+        metadata {
+          categories {
+            id
+            name
+            subcategories {
+              id
+              name
+              image
+            }
+          }
+        }
+      }
+    `,
+  });
+  return result.data.metadata.categories;
+}
 
 export async function getProductDetails(id: string): Promise<Product[]> {
   const result = await client.query<Product[]>({

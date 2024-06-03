@@ -1,25 +1,15 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
+import { HttpLink } from "@apollo/client";
+import {
+  registerApolloClient,
+  ApolloClient,
+  InMemoryCache,
+} from "@apollo/experimental-nextjs-app-support";
 
-const httpLink = createHttpLink({
-  uri: "http://127.0.0.1:3001/graphql",
-});
-
-const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem("token");
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : "",
-    },
-  };
-});
-
-const createApolloClient = () => {
+export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
   return new ApolloClient({
-    link: typeof window !== "undefined" ? authLink.concat(httpLink) : httpLink,
     cache: new InMemoryCache(),
+    link: new HttpLink({
+      uri: process.env.GRAPHQL_URL,
+    }),
   });
-};
-
-export default createApolloClient;
+});

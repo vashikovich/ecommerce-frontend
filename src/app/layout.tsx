@@ -1,6 +1,8 @@
+import "dotenv/config"
 import type { Metadata } from "next";
 import { Lato, Poppins } from "next/font/google";
 import "./globals.css";
+import { ApolloWrapper } from "./ApolloWrapper";
 
 const poppins = Poppins({
   weight: ["300", "500"],
@@ -26,7 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${poppins.variable} ${lato.variable}`}>
-      <body>{children}</body>
+      <body>
+        <ApolloWrapper>{children}</ApolloWrapper>
+      </body>
     </html>
   );
 }

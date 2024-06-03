@@ -1,6 +1,6 @@
-import React from "react";
+import React, { InputHTMLAttributes } from "react";
 
-type InputProps = {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   type: "text" | "email" | "password";
   placeholder?: string;
   value: string;
@@ -8,7 +8,7 @@ type InputProps = {
   color?: string;
   startAdornment: React.ReactNode;
   endAdornment: React.ReactNode;
-};
+}
 
 const Input: React.FC<InputProps> = ({
   type,
@@ -18,6 +18,7 @@ const Input: React.FC<InputProps> = ({
   color = "border-gray-300",
   startAdornment,
   endAdornment,
+  ...props
 }) => {
   const baseClasses =
     "w-full p-2 rounded focus:outline-none focus:ring-2 bg-white flex";
@@ -32,6 +33,7 @@ const Input: React.FC<InputProps> = ({
         value={value}
         onChange={onChange}
         className="flex-1 px-2 text-black outline-none"
+        {...props}
       />
       {endAdornment && <span>{endAdornment}</span>}
     </div>

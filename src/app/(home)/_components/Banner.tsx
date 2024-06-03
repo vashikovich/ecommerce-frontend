@@ -1,22 +1,26 @@
+import Image from "next/image";
+
 const Banner = ({ image, title, subtitle, buttonLabel, buttonLink }) => {
-    const placeholderImage = '/path-to-placeholder-image.jpg';
-  
-    return (
-      <div className="relative w-full h-64 mb-8">
-        <img src={image || placeholderImage} alt="Banner Image" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-center p-4">
-          <h2 className="text-3xl font-bold text-white">{title}</h2>
-          <p className="text-xl text-white mt-2">{subtitle}</p>
-          <a
-            href={buttonLink}
-            className="mt-4 bg-coral text-white py-2 px-4 rounded hover:bg-blue-900"
-          >
-            {buttonLabel}
-          </a>
-        </div>
+  return (
+    <div className="relative h-64">
+      <Image
+        src="https://cdn-endpoint-website.azureedge.net/uploads/UBImageUploadModel/5/mobileImage/bphoto-153-campaign-summer-kickoff_mob.original.jpg?t=1716214744"
+        alt="Banner Image"
+        fill
+        className="absolute object-cover -z-50"
+      />
+      <div className="bg-black/50 flex flex-col justify-center items-center text-center p-4 h-full z-0">
+        <h2 className="text-3xl font-bold text-white">{title}</h2>
+        <p className="text-xl text-white mt-2">{subtitle}</p>
+        <a
+          href={buttonLink}
+          className="mt-4 bg-coral text-white py-2 px-4 rounded hover:bg-blue-900"
+        >
+          {buttonLabel}
+        </a>
       </div>
-    );
-  };
-  
-  export default Banner;
-  
+    </div>
+  );
+};
+
+export default Banner;

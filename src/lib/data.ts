@@ -13,6 +13,7 @@ export async function getCategories(): Promise<Category[]> {
           categories {
             id
             name
+            image
             subcategories {
               id
               name

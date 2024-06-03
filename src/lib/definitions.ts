@@ -5,6 +5,7 @@ export type Metadata = {
 export type Category = {
   id: number;
   name: string;
+  image: string;
   subcategories: Subcategory[];
 };
 

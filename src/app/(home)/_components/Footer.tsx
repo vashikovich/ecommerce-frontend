@@ -7,11 +7,11 @@ const Footer = ({ categories }: { categories: Category[] }) => {
         <div>
           <h3 className="text-xl font-bold mb-4">Categories</h3>
           <ul>
-            {categories.slice(0, 10).map(category => (
-                <li key={category.id} className="mb-2">
-                  {category.name}
-                </li>
-              ))}
+            {categories.slice(0, 10).map((category) => (
+              <li key={category.id} className="mb-2">
+                {category.name}
+              </li>
+            ))}
           </ul>
         </div>
         <div>

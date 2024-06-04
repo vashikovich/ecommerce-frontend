@@ -1,4 +1,4 @@
-import { Category } from "@/lib/definitions";
+import { Category } from "@/__generated__/graphql";
 
 const Footer = ({ categories }: { categories: Category[] }) => {
   return (

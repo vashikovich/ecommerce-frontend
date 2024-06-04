@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import CategoryBar from "./CategoryBar";
-import { Category } from "@/lib/definitions";
 import SearchBar from "./Searchbar";
 import BurgerButton from "./BurgerButton";
 import LogoImg from "@/../public/img/logo.png";
@@ -13,6 +12,7 @@ import CategoryModal from "./CategoryModal";
 import NavbarModal from "./NavbarModal";
 import Button from "@/app/components/Button";
 import { useState } from "react";
+import { Category } from "@/__generated__/graphql";
 
 type ModalType = "CATEGORY" | "CART" | "ACCOUNT" | "NONE";
 

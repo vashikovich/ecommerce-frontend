@@ -1,6 +1,4 @@
 import Button from "@/app/components/Button";
-import Image from "next/image";
-import Modal from "react-modal";
 
 export default function AccountModal() {
   return (

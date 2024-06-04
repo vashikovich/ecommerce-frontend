@@ -2,14 +2,14 @@ import Image from "next/image";
 
 const Banner = ({ image, title, subtitle, buttonLabel, buttonLink }) => {
   return (
-    <div className="relative h-64">
+    <div className="relative h-64 lg:h-96 rounded-lg mx-4">
       <Image
         src="https://cdn-endpoint-website.azureedge.net/uploads/UBImageUploadModel/5/mobileImage/bphoto-153-campaign-summer-kickoff_mob.original.jpg?t=1716214744"
         alt="Banner Image"
         fill
-        className="absolute object-cover -z-50"
+        className="object-cover -z-50 rounded-lg"
       />
-      <div className="bg-black/50 flex flex-col justify-center items-center text-center p-4 h-full z-0">
+      <div className="bg-black/50 flex flex-col justify-center items-center text-center p-4 h-full z-0 rounded-lg">
         <h2 className="text-3xl font-bold text-white">{title}</h2>
         <p className="text-xl text-white mt-2">{subtitle}</p>
         <a

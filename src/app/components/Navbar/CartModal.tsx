@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function CartModal() {
   return (
-    <div className="p-4 bg-white">
+    <div className="p-4 bg-white max-h-screen overflow-y-scroll pb-20">
       {[1, 2, 3].map((x) => (
         <div
           key={x}

@@ -1,75 +1,83 @@
 import { GetServerSideProps } from "next";
-import Navbar from "./_components/Navbar";
-import CategoryBar from "./_components/CategoryBar";
+import Navbar from "../components/Navbar/Navbar";
+import CategoryBar from "../components/Navbar/CategoryBar";
 import Banner from "./_components/Banner";
 import ProductCard from "../components/ProductCard";
-import Footer from "./_components/Footer";
+import Footer from "../components/Footer";
 import Link from "next/link";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { query } from "@/lib/apollo-client";
 import {
   GetCategoriesQuery,
-  SEARCH_PRODUCTS_BY_CATEGORY_QUERY,
+  SearchProductsByCategoryQuery,
+  SearchProductsByTermQuery,
 } from "@/lib/queries";
-import { gql } from "@/__generated__/gql";
 import { getFragmentData } from "@/__generated__";
-import { ProductFragmentDoc } from "@/__generated__/graphql";
-import { ProductFragment } from "@/lib/fragments";
+import { PaginatedProduct } from "@/lib/fragments";
+import { Product } from "@/__generated__/graphql";
+import Carousel from "./_components/Carousel";
 
 const HomePage = async () => {
-  const categories = await query({
-    query: GetCategoriesQuery,
+  const trendingProductsQuery = await query({
+    query: SearchProductsByTermQuery,
+    variables: { searchTerm: "app", first: 15 },
   });
-  const trendingProducts = await query({
-    query: SEARCH_PRODUCTS_BY_CATEGORY_QUERY,
-    variables: { categoryId: 10 },
+  const newProductsQuery = await query({
+    query: SearchProductsByCategoryQuery,
+    variables: { categoryId: 14, first: 15 },
   });
-  const newProducts = await query({
-    query: SEARCH_PRODUCTS_BY_CATEGORY_QUERY,
-    variables: { categoryId: 14 },
-  });
+
+  const extractTrendingProducts = () => {
+    const paginated = getFragmentData(
+      PaginatedProduct,
+      trendingProductsQuery.data.searchProductsByTerm
+    );
+    const products = paginated.edges.map((e) => e.node as Product);
+    return products;
+  };
+
+  const extractNewProducts = () => {
+    const paginated = getFragmentData(
+      PaginatedProduct,
+      newProductsQuery.data.searchProductsByCategory
+    );
+    const products = paginated.edges.map((e) => e.node as Product);
+    return products;
+  };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar categories={categories.data.metadata.categories} />
+    <main className="min-h-screen flex flex-col max-w-screen-xl mx-auto gap-6">
+      <Banner
+        title="Welcome to Our Store"
+        subtitle="Get the best products here"
+        buttonLabel="Shop Now"
+      />
 
-      <main className="flex-grow">
-        <Banner
-          title="Welcome to Our Store"
-          subtitle="Get the best products here"
-          buttonLabel="Shop Now"
+      <section className="px-4 py-8">
+        <h2 className="text-2xl font-bold mb-4">Trending Products</h2>
+        <Carousel
+          list={extractTrendingProducts().map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         />
+      </section>
 
-        <section className="p-4">
-          <h2 className="text-2xl font-bold mb-4">Trending Products</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {trendingProducts.data.searchProductsByCategory.map((product) => {
-              const p = getFragmentData(ProductFragment, product);
-              return <ProductCard key={p.id} product={p} />;
-            })}
-          </div>
-        </section>
+      <Banner
+        title="Special Offer"
+        subtitle="Up to 50% off on selected items"
+        buttonLabel="Check It Out"
+      />
 
-        <Banner
-          title="Special Offer"
-          subtitle="Up to 50% off on selected items"
-          buttonLabel="Check It Out"
+      <section className="p-4">
+        <h2 className="text-2xl font-bold mb-4">New Products</h2>
+        <Carousel
+          list={extractNewProducts().map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         />
-
-        <section className="p-4">
-          <h2 className="text-2xl font-bold mb-4">New Products</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {newProducts.data.searchProductsByCategory.map((product) => {
-              const p = getFragmentData(ProductFragment, product);
-              return <ProductCard key={p.id} product={p} />;
-            })}
-          </div>
-        </section>
-      </main>
-
-      <Footer categories={categories.data.metadata.categories} />
-    </div>
+      </section>
+    </main>
   );
 };
 

@@ -1,17 +1,8 @@
-import { useState } from "react";
+import { MouseEventHandler, useState } from "react";
 
-const BurgerButton = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
+const BurgerButton = ({ isOpen }: { isOpen: boolean }) => {
   return (
-    <button
-      onClick={toggleMenu}
-      className="flex flex-col items-center justify-center w-10 space-y-1.5 bg-blue-900 rounded md:hidden"
-    >
+    <div className="flex flex-col items-center justify-center w-10 space-y-1.5 bg-blue-900 rounded">
       <div
         className={`w-6 h-0.5 bg-white transition-transform duration-300 ${
           isOpen ? "transform rotate-45 translate-y-2" : ""
@@ -27,7 +18,7 @@ const BurgerButton = () => {
           isOpen ? "transform -rotate-45 -translate-y-2" : ""
         }`}
       />
-    </button>
+    </div>
   );
 };
 

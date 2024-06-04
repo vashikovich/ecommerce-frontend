@@ -3,7 +3,7 @@ import SearchSvg from "@/../public/svg/search.svg";
 
 export default function SearchBar() {
   return (
-    <div className="flex items-center w-full">
+    <div className="flex items-center justify-center w-full">
       <Input
         type="text"
         placeholder="Search..."
@@ -12,6 +12,7 @@ export default function SearchBar() {
             <SearchSvg fill="#888888" />
           </div>
         }
+        className="w-full text-black"
       />
     </div>
   );

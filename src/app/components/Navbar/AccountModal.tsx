@@ -25,7 +25,7 @@ export default function AccountModal() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <Button text="Sign in" variant="ghost" fullWidth />
+        <Button text="Sign in" variant="ghost-primary" fullWidth />
         <Button text="Become a Customer" variant="secondary" fullWidth />
       </div>
     </div>

@@ -1,37 +1,41 @@
 // components/ProductCard.tsx
-import { ProductFragment } from "@/__generated__/graphql";
-import { Product } from "@/lib/definitions";
+import { Product } from "@/__generated__/graphql";
 import Image from "next/image";
 import React from "react";
+import Button from "./Button";
 
 interface ProductCardProps {
-  product: ProductFragment;
+  product: Product;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+}: ProductCardProps) => {
   return (
-    <div className="bg-snow-white border border-deep-blue p-4 rounded-lg shadow-lg">
-      <Image
-        src={product.imageUrls[0].small}
-        width={100}
-        height={100}
-        alt={product.name}
-        className="w-full h-48 object-cover rounded-md mb-4"
-      />
-      <div className="text-deep-blue font-bold text-lg mb-1">
-        {product.name}
+    <div className="bg-white border border-deep-blue p-4 rounded-lg shadow-lg h-80 w-60 flex flex-col">
+      <div className="relative h-44">
+        <Image
+          src={product.imageUrls[0].small}
+          fill
+          alt={product.name}
+          className="object-cover"
+        />
       </div>
-      {product.brand && (
-        <div className="text-deep-blue text-sm mb-1">{product.brand}</div>
-      )}
-      <div className="text-deep-blue text-sm mb-1">{product.size}</div>
-      <div className="text-deep-blue text-xs mb-4">{product.id}</div>
-      <button
-        // onClick={onAddToCart}
-        className="w-full bg-coral text-white py-2 px-4 rounded hover:bg-coral-light"
-      >
-        Add to Cart
-      </button>
+      <h5 className="text-xs text-medium-gray">{product.brand || "\u00A0"}</h5>
+      <p className="flex-1 font-bold">{product.name}</p>
+      <div className="flex justify-between items-end">
+        <div className="flex flex-col justify-end gap-1">
+          <h6 className="text-sm text-blue-900">{product.size}</h6>
+          <h6 className="text-xs uppercase text-light-gray">{product.id}</h6>
+        </div>
+        <Button
+          // onClick={onAddToCart}
+          variant="ghost-secondary"
+          iconOnly
+          circular
+          text="+"
+        />
+      </div>
     </div>
   );
 };

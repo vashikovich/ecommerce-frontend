@@ -1,5 +1,4 @@
 import { gql } from "@/__generated__";
-import { CartFragment, OrderFragment, ProductFragment } from "./fragments";
 
 export const GetCategoriesQuery = gql(`
   query getCategories {
@@ -18,66 +17,66 @@ export const GetCategoriesQuery = gql(`
   }
 `);
 
-export const GET_PRODUCT_DETAILS_QUERY = gql(`
+export const GetProductDetailsQuery = gql(`
   query getProductDetails($id: String!) {
     product(id: $id) {
-      ...product
+      ...Product
     }
   }
 `);
 
-export const SEARCH_PRODUCTS_BY_TERM_QUERY = gql(`
-  query searchProductsByTerm($searchTerm: String) {
-    searchProductsByTerm(searchTerm: $searchTerm) {
-      ...product
+export const SearchProductsByTermQuery = gql(`
+  query searchProductsByTerm($searchTerm: String!, $first: Int, $after: String) {
+    searchProductsByTerm(searchTerm: $searchTerm, first: $first, after: $after) {
+      ...PaginatedProduct
     }
   }
 `);
 
-export const SEARCH_PRODUCTS_BY_CATEGORY_QUERY = gql(`
-  query searchProductsByCategory($categoryId: Int) {
-    searchProductsByCategory(categoryId: $categoryId) {
-      ...product
+export const SearchProductsByCategoryQuery = gql(`
+  query searchProductsByCategory($categoryId: Int!, $first: Int, $after: String) {
+    searchProductsByCategory(categoryId: $categoryId, first: $first, after: $after) {
+      ...PaginatedProduct
     }
   }
 `);
 
-export const GET_CART_QUERY = gql(`
+export const GetCartQuery = gql(`
   query getCart {
     cart {
-      ...cart
+      ...Cart
     }
   }
 `);
 
-export const ADD_PRODUCT_TO_CART_QUERY = gql(`
+export const AddProductToCartQuery = gql(`
   mutation addProductToCart($productId: String!) {
     addProductToCart(productId: $productId) {
-      ...cart
+      ...Cart
     }
   }
 `);
 
-export const CHANGE_CART_PRODUCT_QUANTITY_QUERY = gql(`
+export const ChangeCartProductQuantityQuery = gql(`
   mutation changeCartProductQuantity($productId: String!, $quantity: Int!) {
     changeCartProductQuantity(productId: $productId, quantity: $quantity) {
-      ...cart
+      ...Cart
     }
   }
 `);
 
-export const GET_ORDER_QUERY = gql(`
+export const GetOrderQuery = gql(`
   query getOrder($id: String!) {
     order(id: $id) {
-      ...order
+      ...Order
     }
   }
 `);
 
-export const CREATE_ORDER_QUERY = gql(`
+export const CreateOrderQuery = gql(`
   mutation createOrder {
     createOrder {
-      ...order
+      ...Order
     }
   }
 `);

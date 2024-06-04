@@ -1,9 +1,9 @@
 import Button from "@/app/components/Button";
 import Image from "next/image";
 import ChevronSvg from "@/../public/svg/chevron.svg";
-import { Category } from "@/lib/definitions";
 import { useState } from "react";
 import classNames from "classnames";
+import { Category } from "@/__generated__/graphql";
 
 export default function CategoryModal({
   categories,
@@ -23,7 +23,7 @@ export default function CategoryModal({
   };
 
   return (
-    <div className="p-4 bg-white">
+    <div className="p-4 bg-white max-h-screen overflow-y-scroll pb-14">
       <h5>Product Categories</h5>
       <div>
         {categories.map((cat) => (

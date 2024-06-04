@@ -1,12 +1,24 @@
 import { gql } from "@/__generated__/gql";
 
+export const PaginatedProduct = gql(`
+  fragment PaginatedProduct on PaginatedProduct {
+    edges {
+      node {
+        ...Product
+      }
+      cursor
+    }
+  }
+`);
+
 export const ProductFragment = gql(`
-  fragment product on Product {
+  fragment Product on Product {
     id
     name
     brand
     price
     size
+    stock
     ingredients
     origin
     imageUrls {
@@ -19,21 +31,20 @@ export const ProductFragment = gql(`
 `);
 
 export const CartFragment = gql(`
-  ${ProductFragment}
-  fragment cart on Cart {
+  fragment Cart on Cart {
     userId
     items {
       productId
       quantity
       product {
-        ...product
+        ...Product
       }
     }
   }
 `);
 
 export const OrderFragment = gql(`
-  fragment order on Order {
+  fragment Order on Order {
     id
     userId
     totalAmount

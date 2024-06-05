@@ -53,7 +53,7 @@ const Button: React.FC<ButtonProps> = ({
   );
 
   const variantClasses = classNames({
-    "border-blue-900 border-2bg-blue-900 text-white hover:bg-coral":
+    "border-blue-900 border-2 bg-blue-900 text-white hover:bg-coral hover:border-coral":
       variant === "primary",
     "border-coral border-2 bg-coral text-white hover:bg-blue-900 hover:border-blue-900":
       variant === "secondary",
@@ -69,7 +69,12 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={`${baseClasses} ${sizeClasses} ${variantClasses} ${className}`}
+      className={classNames(
+        baseClasses,
+        sizeClasses,
+        variantClasses,
+        className
+      )}
       {...props}
     >
       {iconStart && <span className="mr-2">{iconStart}</span>}

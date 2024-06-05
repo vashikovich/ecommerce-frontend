@@ -6,8 +6,9 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   color?: string;
-  startAdornment: React.ReactNode;
-  endAdornment: React.ReactNode;
+  startAdornment?: React.ReactNode;
+  endAdornment?: React.ReactNode;
+  className?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -16,8 +17,9 @@ const Input: React.FC<InputProps> = ({
   value,
   onChange,
   color = "border-gray-300",
-  startAdornment,
-  endAdornment,
+  startAdornment = null,
+  endAdornment = null,
+  className = "",
   ...props
 }) => {
   const baseClasses =
@@ -25,7 +27,7 @@ const Input: React.FC<InputProps> = ({
   const colorClasses = `border ${color} focus:border-blue-900`;
 
   return (
-    <div className={`${baseClasses} ${colorClasses}`}>
+    <div className={`${baseClasses} ${colorClasses} ${className}`}>
       {startAdornment && <span>{startAdornment}</span>}
       <input
         type={type}

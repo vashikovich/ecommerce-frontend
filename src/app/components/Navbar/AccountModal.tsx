@@ -1,4 +1,5 @@
 import Button from "@/app/components/Button";
+import Link from "next/link";
 
 export default function AccountModal() {
   return (
@@ -23,8 +24,9 @@ export default function AccountModal() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <Button text="Sign in" variant="ghost-primary" fullWidth />
-        <Button text="Register" variant="secondary" fullWidth />
+        <Link href="/user/login">
+          <Button text="Sign in" variant="ghost-primary" fullWidth />
+        </Link>
       </div>
     </div>
   );

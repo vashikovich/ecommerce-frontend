@@ -34,10 +34,6 @@ export default function LoginPage() {
       <Link href="/user/login/email">
         <p className="mb-8 text-blue-900 font-bold">Sign in using email instead</p>
       </Link>
-      <p className="text-center">
-        Don&apos;t have an account yet?{" "}
-        <Link href="/user/register" className="text-coral font-bold">Register and start shopping!</Link>
-      </p>
     </div>
   );
 }

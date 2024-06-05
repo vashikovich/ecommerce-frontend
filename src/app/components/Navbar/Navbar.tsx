@@ -13,6 +13,7 @@ import NavbarModal from "./NavbarModal";
 import Button from "@/app/components/Button";
 import { useState } from "react";
 import { Category } from "@/__generated__/graphql";
+import Link from "next/link";
 
 type ModalType = "CATEGORY" | "CART" | "ACCOUNT" | "NONE";
 
@@ -35,7 +36,9 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
           </div>
           <div className="absolute inset-0 lg:ml-4 flex-1 flex justify-center lg:justify-start items-center h-14 lg:h-20 w-1/2 mx-auto">
             <div className="w-32 lg:w-40">
-              <Image src={LogoImg} alt="Logo" className="object-contain" />
+              <Link href="/">
+                <Image src={LogoImg} alt="Logo" className="object-contain" />
+              </Link>
             </div>
           </div>
           <div className="absolute inset-0 flex-1 hidden lg:flex justify-center items-center h-14 lg:h-20">

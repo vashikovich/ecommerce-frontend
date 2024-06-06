@@ -1,10 +1,3 @@
-export type User = {
-  id: string;
-  email: string;
-  passwordHash?: string;
-  displayName?: string;
-};
-
 export type LoginDto = {
   email: string;
   password: string;
@@ -15,6 +8,24 @@ export type RegisterDto = {
   password: string;
 };
 
-export type TokenInfoOutput = {
+export type User = {
+  id: string;
+  email: string;
+  passwordHash?: string;
+  displayName?: string;
+};
+
+export type TokenInfo = {
   accessToken: string;
+  refreshToken: string;
+};
+
+export type AuthResponse = {
+  user: User;
+  tokenInfo: TokenInfo;
+} & ErrorResponse;
+
+export type ErrorResponse = {
+  error: string;
+  message: string;
 };

@@ -1,15 +1,7 @@
-import { GetServerSideProps } from "next";
-import Navbar from "../components/Navbar/Navbar";
-import CategoryBar from "../components/Navbar/CategoryBar";
 import Banner from "./_components/Banner";
 import ProductCard from "../components/ProductCard";
-import Footer from "../components/Footer";
-import Link from "next/link";
-import Input from "../components/Input";
-import Button from "../components/Button";
 import { query } from "@/lib/apollo-client";
 import {
-  GetCategoriesQuery,
   SearchProductsByCategoryQuery,
   SearchProductsByTermQuery,
 } from "@/lib/queries";

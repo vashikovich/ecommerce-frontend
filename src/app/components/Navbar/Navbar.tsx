@@ -11,13 +11,16 @@ import AccountModal from "./AccountModal";
 import CategoryModal from "./CategoryModal";
 import NavbarModal from "./NavbarModal";
 import Button from "@/app/components/Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Category } from "@/__generated__/graphql";
 import Link from "next/link";
+import { AuthContext } from "../providers/AuthProvider";
 
 type ModalType = "CATEGORY" | "CART" | "ACCOUNT" | "NONE";
 
 const Navbar = ({ categories }: { categories: Category[] }) => {
+  const auth = useContext(AuthContext);
+
   const [modalOpen, setModalOpen] = useState<ModalType>("NONE");
 
   const toggleModal = (modal: ModalType) => {
@@ -26,7 +29,22 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
 
   return (
     <nav>
-      <div className="fixed w-full z-50 h-32 lg:h-36">
+      {modalOpen === "CART" && (
+        <NavbarModal onOverlayClick={() => setModalOpen("NONE")}>
+          <CartModal />
+        </NavbarModal>
+      )}
+      {modalOpen === "ACCOUNT" && (
+        <NavbarModal onOverlayClick={() => setModalOpen("NONE")}>
+          <AccountModal />
+        </NavbarModal>
+      )}
+      {modalOpen === "CATEGORY" && (
+        <NavbarModal onOverlayClick={() => setModalOpen("NONE")}>
+          <CategoryModal categories={categories} />
+        </NavbarModal>
+      )}
+      <div className="fixed w-full z-40 h-32 lg:h-36">
         <div className="bg-blue-900 text-white px-4 flex items-center h-14 lg:h-20">
           <div
             className="mr-auto flex items-center lg:hidden h-full"
@@ -47,9 +65,11 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
             </div>
           </div>
           <div className="flex justify-end ml-auto space-x-2 lg:hidden">
-            <div className="h-6 w-6" onClick={() => toggleModal("CART")}>
-              <CartSvg fill="white" />
-            </div>
+            {auth.user && (
+              <div className="h-6 w-6" onClick={() => toggleModal("CART")}>
+                <CartSvg fill="white" />
+              </div>
+            )}
             <div className="h-7 w-7" onClick={() => toggleModal("ACCOUNT")}>
               <AccountSvg fill="white" />
             </div>
@@ -68,21 +88,6 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
           <CategoryBar categories={categories} />
         </div>
       </div>
-      {modalOpen === "CART" && (
-        <NavbarModal onOverlayClick={() => setModalOpen("NONE")}>
-          <CartModal />
-        </NavbarModal>
-      )}
-      {modalOpen === "ACCOUNT" && (
-        <NavbarModal onOverlayClick={() => setModalOpen("NONE")}>
-          <AccountModal />
-        </NavbarModal>
-      )}
-      {modalOpen === "CATEGORY" && (
-        <NavbarModal onOverlayClick={() => setModalOpen("NONE")}>
-          <CategoryModal categories={categories} />
-        </NavbarModal>
-      )}
     </nav>
   );
 };

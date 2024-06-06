@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -5,9 +6,9 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  color?: string;
   startAdornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
+  error?: boolean;
   className?: string;
 }
 
@@ -16,18 +17,25 @@ const Input: React.FC<InputProps> = ({
   placeholder = "",
   value,
   onChange,
-  color = "border-gray-300",
   startAdornment = null,
   endAdornment = null,
+  error = false,
   className = "",
   ...props
 }) => {
   const baseClasses =
-    "w-full p-2 rounded focus:outline-none focus:ring-2 bg-white flex";
-  const colorClasses = `border ${color} focus:border-blue-900`;
+    "w-full p-2 rounded focus:outline-none focus:ring-2 bg-white flex border";
+  const validClasses = "border-gray-300 focus:border-blue-900";
+  const errorClasses = "border-coral text-coral";
 
   return (
-    <div className={`${baseClasses} ${colorClasses} ${className}`}>
+    <div
+      className={classNames(
+        baseClasses,
+        error ? errorClasses : validClasses,
+        className
+      )}
+    >
       {startAdornment && <span>{startAdornment}</span>}
       <input
         type={type}

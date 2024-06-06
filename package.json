@@ -13,8 +13,9 @@
   "dependencies": {
     "@apollo/client": "^3.10.4",
     "@apollo/experimental-nextjs-app-support": "^0.11.0",
+    "@apollo/link-error": "^2.0.0-beta.3",
+    "axios": "^1.7.2",
     "classnames": "^2.5.1",
-    "dotenv": "^16.4.5",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18"

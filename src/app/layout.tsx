@@ -1,12 +1,12 @@
-import "dotenv/config";
 import type { Metadata } from "next";
 import { Lato, Poppins } from "next/font/google";
 import "./globals.css";
 import { ApolloWrapper } from "./ApolloWrapper";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/Footer";
 import { query } from "@/lib/apollo-client";
 import { GetCategoriesQuery } from "@/lib/queries";
+import { AuthProvider } from "./components/providers/AuthProvider";
 
 const poppins = Poppins({
   weight: ["300", "500"],
@@ -38,9 +38,11 @@ export default async function RootLayout({
     <html lang="en" className={`${poppins.variable} ${lato.variable}`}>
       <body>
         <ApolloWrapper>
-          <Navbar categories={categoriesQuery.data.metadata.categories} />
-          <div className="pt-32 lg:pt-36">{children}</div>
-          <Footer categories={categoriesQuery.data.metadata.categories} />
+          <AuthProvider>
+            <Navbar categories={categoriesQuery.data.metadata.categories} />
+            <div className="pt-32 lg:pt-36">{children}</div>
+            <Footer categories={categoriesQuery.data.metadata.categories} />
+          </AuthProvider>
         </ApolloWrapper>
       </body>
     </html>

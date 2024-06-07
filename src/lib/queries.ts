@@ -25,17 +25,9 @@ export const GetProductDetailsQuery = gql(`
   }
 `);
 
-export const SearchProductsByTermQuery = gql(`
-  query searchProductsByTerm($searchTerm: String!, $first: Int, $after: String) {
-    searchProductsByTerm(searchTerm: $searchTerm, first: $first, after: $after) {
-      ...PaginatedProduct
-    }
-  }
-`);
-
-export const SearchProductsByCategoryQuery = gql(`
-  query searchProductsByCategory($categoryId: Int!, $first: Int, $after: String) {
-    searchProductsByCategory(categoryId: $categoryId, first: $first, after: $after) {
+export const SearchProductsQuery = gql(`
+  query searchProducts($input: SearchProductsInput!) {
+    searchProducts(input: $input) {
       ...PaginatedProduct
     }
   }

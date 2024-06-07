@@ -30,19 +30,16 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
   return (
     <nav>
       {modalOpen === "CART" && (
-        <NavbarModal onOverlayClick={() => setModalOpen("NONE")}>
-          <CartModal />
-        </NavbarModal>
+        <CartModal onDismissModal={() => setModalOpen("NONE")} />
       )}
       {modalOpen === "ACCOUNT" && (
-        <NavbarModal onOverlayClick={() => setModalOpen("NONE")}>
-          <AccountModal />
-        </NavbarModal>
+        <AccountModal onDismissModal={() => setModalOpen("NONE")} />
       )}
       {modalOpen === "CATEGORY" && (
-        <NavbarModal onOverlayClick={() => setModalOpen("NONE")}>
-          <CategoryModal categories={categories} />
-        </NavbarModal>
+        <CategoryModal
+          categories={categories}
+          onDismissModal={() => setModalOpen("NONE")}
+        />
       )}
       <div className="fixed w-full z-40 h-32 lg:h-36">
         <div className="bg-blue-900 text-white px-4 flex items-center h-14 lg:h-20">

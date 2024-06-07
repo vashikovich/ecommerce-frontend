@@ -20,7 +20,7 @@ const CategoryBar = ({ categories }: { categories: Category[] }) => {
           {activeCategory === category.id && (
             <NavbarModal onOverlayClick={() => setActiveCategory(null)}>
               <div
-                className={classNames( 
+                className={classNames(
                   "relative mx-auto bg-white shadow-lg rounded-b max-w-screen-lg grid-cols-4 grid-flow-col grid p-6",
                   Math.ceil(category.subcategories.length / 4) === 1 &&
                     "grid-rows-1",

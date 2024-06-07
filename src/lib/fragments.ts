@@ -8,6 +8,17 @@ export const PaginatedProduct = gql(`
       }
       cursor
     }
+    pageInfo {
+      total
+      availableBrands {
+        brand
+        count
+      }
+      availableCategories {
+        categoryId
+        count
+      }
+    }
   }
 `);
 

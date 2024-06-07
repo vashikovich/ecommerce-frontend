@@ -1,38 +1,41 @@
 import Banner from "./_components/Banner";
 import ProductCard from "../components/ProductCard";
 import { query } from "@/lib/apollo-client";
-import {
-  SearchProductsByCategoryQuery,
-  SearchProductsByTermQuery,
-} from "@/lib/queries";
 import { getFragmentData } from "@/__generated__";
 import { PaginatedProduct } from "@/lib/fragments";
 import { Product } from "@/__generated__/graphql";
 import Carousel from "./_components/Carousel";
+import { SearchProductsQuery } from "@/lib/queries";
+import { ApolloQueryResult } from "@apollo/client";
 
 const HomePage = async () => {
-  const trendingProductsQuery = await query({
-    query: SearchProductsByTermQuery,
-    variables: { searchTerm: "app", first: 15 },
+  const localProductsQuery = await query({
+    query: SearchProductsQuery,
+    variables: {
+      input: {
+        filterBy: {
+          local: true,
+        },
+      },
+    },
   });
-  const newProductsQuery = await query({
-    query: SearchProductsByCategoryQuery,
-    variables: { categoryId: 14, first: 15 },
+  const peakProductsQuery = await query({
+    query: SearchProductsQuery,
+    variables: {
+      input: {
+        filterBy: {
+          peak: true,
+        },
+      },
+    },
   });
 
-  const extractTrendingProducts = () => {
+  const extractSearchProductsQuery = (
+    queryResult: ApolloQueryResult<SearchProductsQuery>
+  ) => {
     const paginated = getFragmentData(
       PaginatedProduct,
-      trendingProductsQuery.data.searchProductsByTerm
-    );
-    const products = paginated.edges.map((e) => e.node as Product);
-    return products;
-  };
-
-  const extractNewProducts = () => {
-    const paginated = getFragmentData(
-      PaginatedProduct,
-      newProductsQuery.data.searchProductsByCategory
+      queryResult.data.searchProducts
     );
     const products = paginated.edges.map((e) => e.node as Product);
     return products;
@@ -49,9 +52,13 @@ const HomePage = async () => {
       <section className="px-4 py-8">
         <h2 className="text-2xl font-bold mb-4">Trending Products</h2>
         <Carousel
-          list={extractTrendingProducts().map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          list={extractSearchProductsQuery(localProductsQuery).map(
+            (product) => (
+              <div className="w-60 h-80" key={product.id}>
+                <ProductCard product={product} />
+              </div>
+            )
+          )}
         />
       </section>
 
@@ -64,8 +71,10 @@ const HomePage = async () => {
       <section className="p-4">
         <h2 className="text-2xl font-bold mb-4">New Products</h2>
         <Carousel
-          list={extractNewProducts().map((product) => (
-            <ProductCard key={product.id} product={product} />
+          list={extractSearchProductsQuery(peakProductsQuery).map((product) => (
+            <div className="w-60 h-80" key={product.id}>
+              <ProductCard product={product} />
+            </div>
           ))}
         />
       </section>

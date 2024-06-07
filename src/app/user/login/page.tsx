@@ -12,7 +12,7 @@ export default function LoginPage() {
       <div className="flex flex-col lg:flex-row gap-4 w-full mb-4">
         <Button
           text="Google"
-          className="bg-white border-black text-current hover:bg-light-gray hover:border-black"
+          className="bg-white border-gray-900 text-gray-900 hover:bg-light-gray hover:border-gray-900"
           iconStart={
             <div className="w-6 h-6">
               <GoogleSvg />
@@ -22,7 +22,7 @@ export default function LoginPage() {
         />
         <Button
           text="Apple"
-          className="bg-black border-black text-white hover:bg-light-gray hover:border-light-gray"
+          className="bg-gray-900 border-gray-900 text-white hover:bg-medium-gray hover:border-medium-gray"
           iconStart={
             <div className="w-6 h-6">
               <AppleSvg fill="white" />
@@ -32,7 +32,9 @@ export default function LoginPage() {
         />
       </div>
       <Link href="/user/login/email">
-        <p className="mb-8 text-blue-900 font-bold">Sign in using email instead</p>
+        <p className="mb-8 text-blue-900 font-bold">
+          Sign in using email instead
+        </p>
       </Link>
     </div>
   );

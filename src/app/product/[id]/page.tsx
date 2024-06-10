@@ -1,0 +1,124 @@
+import {
+  Product,
+  SearchProductsQuery as SearchProductsQueryType,
+} from "@/__generated__/graphql";
+import { query } from "@/lib/apollo-client";
+import { GetProductDetailsQuery, SearchProductsQuery } from "@/lib/queries";
+import classNames from "classnames";
+import Image from "next/image";
+import TrashCanSvg from "@/../public/svg/trash-can.svg";
+import ShareSvg from "@/../public/svg/share.svg";
+import AtcButton from "@/app/components/AtcButton";
+import Carousel from "@/app/components/Carousel";
+import { ApolloQueryResult } from "@apollo/client";
+import { getFragmentData } from "@/__generated__";
+import { PaginatedProduct } from "@/lib/fragments";
+import ProductCard from "@/app/components/ProductCard";
+
+export default async function ProductPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const cartCount = 0;
+
+  const productQuery = await query({
+    query: GetProductDetailsQuery,
+    variables: { id: params.id },
+  });
+
+  const product = productQuery.data.product as Product;
+
+  const relatedProductsQuery = await query({
+    query: SearchProductsQuery,
+    variables: {
+      input: {
+        filterBy: {
+          peak: true,
+        },
+      },
+    },
+  });
+
+  const extractSearchProductsQuery = (
+    queryResult: ApolloQueryResult<SearchProductsQueryType>
+  ) => {
+    const paginated = getFragmentData(
+      PaginatedProduct,
+      queryResult.data.searchProducts
+    );
+    const products = paginated.edges.map((e) => e.node as Product);
+    return products;
+  };
+
+  return (
+    <div className="flex flex-col">
+      <div className="w-6 h-6 self-end px-4">
+        <ShareSvg />
+      </div>
+      <div className="w-full ">
+        <Carousel
+          visibleCount={1}
+          scrollCount={1}
+          snap="center"
+          list={product.imageUrls.map((i) => (
+            <Image
+              src={i.original ?? i.small}
+              width={4000}
+              height={4000}
+              alt={product.name}
+              key={i.small}
+            />
+          ))}
+        />
+      </div>
+      <div className="flex flex-col px-4">
+        <h5 className="text-medium-gray">{product.brand ?? `\u00A0`}</h5>
+        <p className="text-3xl font-bold mb-2">{product.name}</p>
+        <div className="flex items-baseline gap-2">
+          <p className="text-xl text-blue-900 font-bold">${product.price}</p>
+          <p className="text-xl text-blue-900 font-bold">/</p>
+          <p className="text-lg">{product.size}</p>
+        </div>
+        <div className="w-full mt-5">
+          <AtcButton product={product} />
+        </div>
+      </div>
+      <div className="flex flex-col mt-6 pt-6 border-t-2 px-4">
+        <h5 className="text-lg font-bold mb-2">More about this product</h5>
+        <p>{product.description}</p>
+        <div className="flex gap-4">
+          <p className="font-bold">Size:</p>
+          <p>{product.size}</p>
+        </div>
+        {product.origin && (
+          <div className="flex gap-4">
+            <p className="font-bold">Country of Origin: </p>
+            <p>{product.origin}</p>
+          </div>
+        )}
+        {product.ingredients && (
+          <div className="flex gap-4">
+            <p className="font-bold">Ingredients: </p>
+            <p>{product.ingredients}</p>
+          </div>
+        )}
+      </div>
+      <div className="flex flex-col mt-6 pt-6 border-t-2">
+        <h5 className="text-lg font-bold mb-4 px-4">Related Products</h5>
+        <Carousel
+          gap={30}
+          snap="start"
+          snapMargin={16}
+          list={extractSearchProductsQuery(relatedProductsQuery).map(
+            (product) => (
+              <div className="w-60 h-80 mb-5" key={product.id}>
+                <ProductCard product={product} />
+              </div>
+            )
+          )}
+        />
+      </div>
+    </div>
+  );
+}

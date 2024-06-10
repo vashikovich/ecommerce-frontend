@@ -3,8 +3,11 @@ import ProductCard from "../components/ProductCard";
 import { query } from "@/lib/apollo-client";
 import { getFragmentData } from "@/__generated__";
 import { PaginatedProduct } from "@/lib/fragments";
-import { Product } from "@/__generated__/graphql";
-import Carousel from "./_components/Carousel";
+import {
+  Product,
+  SearchProductsQuery as SearchProductsQueryType,
+} from "@/__generated__/graphql";
+import Carousel from "../components/Carousel";
 import { SearchProductsQuery } from "@/lib/queries";
 import { ApolloQueryResult } from "@apollo/client";
 
@@ -16,6 +19,9 @@ const HomePage = async () => {
         filterBy: {
           local: true,
         },
+        pagination: {
+          first: 10,
+        },
       },
     },
   });
@@ -26,12 +32,15 @@ const HomePage = async () => {
         filterBy: {
           peak: true,
         },
+        pagination: {
+          first: 10,
+        },
       },
     },
   });
 
   const extractSearchProductsQuery = (
-    queryResult: ApolloQueryResult<SearchProductsQuery>
+    queryResult: ApolloQueryResult<SearchProductsQueryType>
   ) => {
     const paginated = getFragmentData(
       PaginatedProduct,
@@ -49,12 +58,15 @@ const HomePage = async () => {
         buttonLabel="Shop Now"
       />
 
-      <section className="px-4 py-8">
-        <h2 className="text-2xl font-bold mb-4">Trending Products</h2>
+      <section className="py-8">
+        <h2 className="text-2xl font-bold mb-4 px-4">Local Products</h2>
         <Carousel
+          gap={30}
+          snap="start"
+          snapMargin={16}
           list={extractSearchProductsQuery(localProductsQuery).map(
             (product) => (
-              <div className="w-60 h-80" key={product.id}>
+              <div className="w-60 h-80 mb-5" key={product.id}>
                 <ProductCard product={product} />
               </div>
             )
@@ -68,11 +80,14 @@ const HomePage = async () => {
         buttonLabel="Check It Out"
       />
 
-      <section className="p-4">
-        <h2 className="text-2xl font-bold mb-4">New Products</h2>
+      <section className="py-8">
+        <h2 className="text-2xl font-bold mb-4 px-4">Peak Season</h2>
         <Carousel
+          gap={30}
+          snap="start"
+          snapMargin={16}
           list={extractSearchProductsQuery(peakProductsQuery).map((product) => (
-            <div className="w-60 h-80" key={product.id}>
+            <div className="w-60 h-80 mb-5" key={product.id}>
               <ProductCard product={product} />
             </div>
           ))}

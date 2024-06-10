@@ -24,10 +24,10 @@ export default function Carousel({
   const containerRef = useRef<any>(null);
   const contentRef = useRef<any>(null);
 
-  const [contentWidth, setContentWidth] = useState<number | string | undefined>(
+  const [contentWidth, setContentWidth] = useState<number | undefined>(
     undefined
   );
-  console.log("render");
+
   useEffect(() => {
     const resizeObserver = new ResizeObserver(() => {
       if (containerRef.current !== null)
@@ -45,14 +45,13 @@ export default function Carousel({
   }, [visibleCount, gap]);
 
   const sideMargin =
-    snap === "center"
+    snap === "center" && contentWidth !== undefined
       ? (containerRef.current?.clientWidth ?? 0) - Number(contentWidth)
       : snapMargin;
 
   const scrollRight = () => {
     if (containerRef.current) {
-      containerRef.current.scrollLeft +=
-        (Number(contentWidth) + gap) * scrollCount;
+      containerRef.current.scrollLeft += (contentWidth + gap) * scrollCount;
     }
   };
 

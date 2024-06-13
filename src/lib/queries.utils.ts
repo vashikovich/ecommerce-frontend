@@ -28,8 +28,7 @@ export const extractSearchProductsQuery = (
         }>
       >
 ) => {
-  if ((queryResult as QueryResult).loading || !queryResult.data)
-    return undefined;
+  if (!queryResult.data) return undefined;
 
   const paginated = getFragmentData(
     PaginatedProduct,

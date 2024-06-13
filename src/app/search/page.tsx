@@ -7,7 +7,7 @@ import {
   SearchProductsInput,
 } from "@/__generated__/graphql";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import SearchResults from "./SearchResults";
 import { SearchParamsType } from "../components/providers/SearchProvider";
 import SearchFilters from "./SearchFilters";
@@ -27,36 +27,36 @@ export default function SearchPage() {
   const inputVars = buildQueryVarFromParams(params);
   const resultsQuery = useQuery(SearchProductsQuery, {
     variables: { input: inputVars, first: 4 },
+    notifyOnNetworkStatusChange: true,
   });
   const paginatedProduct = resultsQuery.data
     ?.searchProducts as PaginatedProduct;
   const results = extractSearchProductsQuery(resultsQuery);
-  const lastCursor = paginatedProduct?.pageInfo.lastCursor;
+  const lastCursor = paginatedProduct?.edges.slice(-1)[0]?.cursor;
+  const hasMore = (resultsQuery.data?.searchProducts as PaginatedProduct)
+    ?.pageInfo.hasMore;
 
   const [showFilterModal, setShowFilterModal] = useState(false);
 
-  const [ref, inView] = useInView();
+  const [inViewRef, inView] = useInView();
 
   useEffect(() => {
-    if (inView && !resultsQuery.loading && lastCursor) {
+    console.log(inView, !resultsQuery.loading, lastCursor, hasMore);
+    if (inView && !resultsQuery.loading && lastCursor && hasMore) {
       resultsQuery.fetchMore({ variables: { after: lastCursor } });
+      console.log("more");
     }
-  }, [inView, resultsQuery.loading, lastCursor]);
+  }, [inView, resultsQuery, lastCursor, hasMore]);
 
   return (
     <div className={classNames("flex max-w-screen-xl mx-auto gap-6")}>
       <div
         className={classNames(
-          "hidden w-full lg:w-80 h-full lg:h-fit flex-shrink-0 lg:block z-10 bg-white"
+          "hidden w-full lg:w-80 h-full lg:h-fit flex-shrink-0 lg:block z-10 bg-white lg:sticky lg:top-36"
         )}
       >
         {paginatedProduct ? (
-          <div>
-            <SearchFilters
-              params={params}
-              paginatedProduct={paginatedProduct}
-            />
-          </div>
+          <SearchFilters params={params} paginatedProduct={paginatedProduct} />
         ) : (
           <>Loading</>
         )}
@@ -91,8 +91,8 @@ export default function SearchPage() {
           >
             <SearchResults products={results} />
           </div>
-          {results?.length && (
-            <div className="w-6 h-6 mx-auto my-10" ref={ref}>
+          {!resultsQuery.loading && hasMore && (
+            <div className="w-10 h-10 mx-auto my-10" ref={inViewRef}>
               <LoadingSvg />
             </div>
           )}

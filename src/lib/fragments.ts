@@ -23,7 +23,6 @@ export const PaginatedProduct = gql(`
       cursor
     }
     pageInfo {
-      lastCursor
       hasMore
     }
     searchInfo {

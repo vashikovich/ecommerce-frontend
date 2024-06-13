@@ -67,7 +67,7 @@ export default function Carousel({
       <div className="hidden lg:block">
         <div className="absolute -right-5 inset-y-auto h-full flex items-center z-10 pb-10">
           <Button
-            text=">"
+            content=">"
             variant="ghost-primary"
             iconOnly
             circular
@@ -77,7 +77,7 @@ export default function Carousel({
         </div>
         <div className="absolute -left-5 inset-y-auto h-full flex items-center z-10 pb-10">
           <Button
-            text="<"
+            content="<"
             variant="ghost-primary"
             iconOnly
             circular

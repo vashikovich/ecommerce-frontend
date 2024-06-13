@@ -16,7 +16,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }: ProductCardProps) => {
   return (
     <Link href={`/product/${product.id}`}>
-      <div className="bg-white border border-deep-blue p-4 rounded-lg shadow-lg w-full h-full flex flex-col">
+      <div className="relative bg-white border border-deep-blue p-4 rounded-lg shadow-lg w-full h-full flex flex-col">
         <div className="relative h-44">
           <Image
             src={product.imageUrls[0].small}
@@ -24,6 +24,20 @@ const ProductCard: React.FC<ProductCardProps> = ({
             alt={product.name}
             className="object-cover"
           />
+        </div>
+        <div className="absolute top-0 left-0">
+          <div className="flex">
+            {product.local && (
+              <div className="bg-blue-900 w-fit border-2 border-blue-900 py-0.5 px-1">
+                <h6 className="text-xs text-white">LOCAL</h6>
+              </div>
+            )}
+            {product.peak && (
+              <div className="border-blue-900 w-fit border-2 py-0.5 px-1">
+                <h6 className="text-xs text-blue-900">PEAK</h6>
+              </div>
+            )}
+          </div>
         </div>
         <h5 className="text-xs text-medium-gray">
           {product.brand || "\u00A0"}

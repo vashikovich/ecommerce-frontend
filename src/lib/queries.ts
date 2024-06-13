@@ -3,16 +3,7 @@ import { gql } from "@/__generated__";
 export const GetCategoriesQuery = gql(`
   query getCategories {
     metadata {
-      categories {
-        id
-        name
-        image
-        subcategories {
-          id
-          name
-          image
-        }
-      }
+      ...Metadata
     }
   }
 `);
@@ -26,8 +17,8 @@ export const GetProductDetailsQuery = gql(`
 `);
 
 export const SearchProductsQuery = gql(`
-  query searchProducts($input: SearchProductsInput!) {
-    searchProducts(input: $input) {
+  query searchProducts($input: SearchProductsInput!, $first: Int, $after: String) {
+    searchProducts(input: $input, first: $first, after: $after) {
       ...PaginatedProduct
     }
   }

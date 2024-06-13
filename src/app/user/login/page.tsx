@@ -11,7 +11,7 @@ export default function LoginPage() {
       <p className="text-center mb-4">Sign in using:</p>
       <div className="flex flex-col lg:flex-row gap-4 w-full mb-4">
         <Button
-          text="Google"
+          content="Google"
           className="bg-white border-gray-900 text-gray-900 hover:bg-light-gray hover:border-gray-900"
           iconStart={
             <div className="w-6 h-6">
@@ -21,7 +21,7 @@ export default function LoginPage() {
           fullWidth
         />
         <Button
-          text="Apple"
+          content="Apple"
           className="bg-gray-900 border-gray-900 text-white hover:bg-medium-gray hover:border-medium-gray"
           iconStart={
             <div className="w-6 h-6">

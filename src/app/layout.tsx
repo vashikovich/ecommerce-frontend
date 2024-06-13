@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import { Lato, Poppins } from "next/font/google";
 import "./globals.css";
 import { ApolloWrapper } from "./ApolloWrapper";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/Footer";
+import { AuthProvider } from "./components/providers/AuthProvider";
+import { SearchProvider } from "./components/providers/SearchProvider";
 import { query } from "@/lib/apollo-client";
 import { GetCategoriesQuery } from "@/lib/queries";
-import { AuthProvider } from "./components/providers/AuthProvider";
+import { Metadata } from "@/__generated__/graphql";
 
 const poppins = Poppins({
   weight: ["300", "500"],
@@ -34,17 +35,36 @@ export default async function RootLayout({
     query: GetCategoriesQuery,
   });
 
+  const categories = (categoriesQuery.data.metadata as Metadata).categories;
+
   return (
     <html lang="en" className={`${poppins.variable} ${lato.variable}`}>
       <body>
-        <ApolloWrapper>
-          <AuthProvider>
-            <Navbar categories={categoriesQuery.data.metadata.categories} />
-            <div className="pt-32 lg:pt-36">{children}</div>
-            <Footer categories={categoriesQuery.data.metadata.categories} />
-          </AuthProvider>
-        </ApolloWrapper>
+        <ComposedProviders
+          providers={[ApolloWrapper, AuthProvider, SearchProvider]}
+        >
+          <Navbar categories={categories} />
+          <div className="pt-[120px] lg:pt-36">{children}</div>
+          <Footer categories={categories} />
+        </ComposedProviders>
       </body>
     </html>
+  );
+}
+
+function ComposedProviders(props: {
+  providers: Array<
+    React.JSXElementConstructor<React.PropsWithChildren<unknown>>
+  >;
+  children: React.ReactNode;
+}) {
+  const { providers = [], children } = props;
+
+  return (
+    <>
+      {providers.reduceRight((acc, Prov) => {
+        return <Prov>{acc}</Prov>;
+      }, children)}
+    </>
   );
 }

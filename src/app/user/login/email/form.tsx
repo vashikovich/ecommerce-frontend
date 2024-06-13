@@ -102,7 +102,7 @@ export default function LoginEmailForm({ containerClassName }: Props) {
         <p className="text-coral font-bold mb-4">{serverError}</p>
       )}
       <Button
-        text="Sign In"
+        content="Sign In"
         variant="primary"
         onClick={handleSubmit}
         fullWidth

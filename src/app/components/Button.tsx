@@ -1,5 +1,5 @@
 // components/Button.tsx
-import React, { ButtonHTMLAttributes } from "react";
+import React, { ButtonHTMLAttributes, ReactNode } from "react";
 import classNames from "classnames";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -11,7 +11,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "ghost-secondary"
     | "ghost-white"
     | "text";
-  text: string;
+  content: ReactNode;
   fullWidth?: boolean;
   iconStart?: React.ReactNode;
   iconEnd?: React.ReactNode;
@@ -23,7 +23,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button: React.FC<ButtonProps> = ({
   size = "medium",
   variant = "primary",
-  text,
+  content,
   fullWidth = false,
   iconStart = null,
   iconEnd = null,
@@ -78,7 +78,7 @@ const Button: React.FC<ButtonProps> = ({
       {...props}
     >
       {iconStart && <span className="mr-2">{iconStart}</span>}
-      {text}
+      {content}
       {iconEnd && <span className="ml-2">{iconEnd}</span>}
     </button>
   );

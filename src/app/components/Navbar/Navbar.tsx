@@ -9,12 +9,11 @@ import AccountSvg from "@/../public/svg/account.svg";
 import CartModal from "./CartModal";
 import AccountModal from "./AccountModal";
 import CategoryModal from "./CategoryModal";
-import NavbarModal from "./NavbarModal";
 import Button from "@/app/components/Button";
 import { useContext, useState } from "react";
-import { Category } from "@/__generated__/graphql";
 import Link from "next/link";
 import { AuthContext } from "../providers/AuthProvider";
+import { Category } from "@/__generated__/graphql";
 
 type ModalType = "CATEGORY" | "CART" | "ACCOUNT" | "NONE";
 
@@ -49,17 +48,15 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
           >
             <BurgerButton isOpen={modalOpen === "CATEGORY"} />
           </div>
-          <div className="absolute inset-0 lg:ml-4 flex-1 flex justify-center lg:justify-start items-center h-14 lg:h-20 w-1/2 mx-auto">
+          <div className="lg:ml-4 flex-1 flex justify-center lg:justify-start items-center h-14 lg:h-20 w-1/2 mx-auto z-10">
             <div className="w-32 lg:w-40">
               <Link href="/">
                 <Image src={LogoImg} alt="Logo" className="object-contain" />
               </Link>
             </div>
           </div>
-          <div className="absolute inset-0 flex-1 hidden lg:flex justify-center items-center h-14 lg:h-20">
-            <div className="w-1/2">
-              <SearchBar />
-            </div>
+          <div className="flex-1 hidden lg:flex justify-center items-center h-14 lg:h-20 w-1/2">
+            <SearchBar />
           </div>
           <div className="flex justify-end ml-auto space-x-2 lg:hidden">
             {auth.user && (
@@ -71,9 +68,9 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
               <AccountSvg fill="white" />
             </div>
           </div>
-          <div className="lg:flex justify-end flex-1 ml-auto space-x-2 hidden">
-            <Button text="Sign in" variant="ghost-white" />
-            <Button text="Register" variant="secondary" />
+          <div className="lg:flex justify-end flex-1 ml-auto space-x-2 hidden z-10">
+            <Button content="Sign in" variant="ghost-white" />
+            <Button content="Register" variant="secondary" />
           </div>
         </div>
         {modalOpen === "NONE" && (

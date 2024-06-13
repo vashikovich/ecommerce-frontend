@@ -42,7 +42,7 @@ export default function CartModal({
           </div>
         </div>
         <div className="flex justify-center">
-          <Button text="View Cart" variant="secondary" fullWidth />
+          <Button content="View Cart" variant="secondary" fullWidth />
         </div>
       </div>
     </NavbarModal>

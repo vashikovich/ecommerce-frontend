@@ -1,15 +1,9 @@
 import Banner from "./_components/Banner";
 import ProductCard from "../components/ProductCard";
 import { query } from "@/lib/apollo-client";
-import { getFragmentData } from "@/__generated__";
-import { PaginatedProduct } from "@/lib/fragments";
-import {
-  Product,
-  SearchProductsQuery as SearchProductsQueryType,
-} from "@/__generated__/graphql";
 import Carousel from "../components/Carousel";
 import { SearchProductsQuery } from "@/lib/queries";
-import { ApolloQueryResult } from "@apollo/client";
+import { extractSearchProductsQuery } from "@/lib/queries.utils";
 
 const HomePage = async () => {
   const localProductsQuery = await query({
@@ -19,10 +13,8 @@ const HomePage = async () => {
         filterBy: {
           local: true,
         },
-        pagination: {
-          first: 10,
-        },
       },
+      first: 10,
     },
   });
   const peakProductsQuery = await query({
@@ -32,23 +24,10 @@ const HomePage = async () => {
         filterBy: {
           peak: true,
         },
-        pagination: {
-          first: 10,
-        },
       },
+      first: 10,
     },
   });
-
-  const extractSearchProductsQuery = (
-    queryResult: ApolloQueryResult<SearchProductsQueryType>
-  ) => {
-    const paginated = getFragmentData(
-      PaginatedProduct,
-      queryResult.data.searchProducts
-    );
-    const products = paginated.edges.map((e) => e.node as Product);
-    return products;
-  };
 
   return (
     <main className="min-h-screen flex flex-col max-w-screen-xl mx-auto gap-6">

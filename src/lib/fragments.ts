@@ -1,5 +1,19 @@
 import { gql } from "@/__generated__/gql";
 
+export const Metadata = gql(`
+  fragment Metadata on Metadata {
+      categories {
+        id
+        name
+        image
+        subcategories {
+          id
+          name
+          image
+        }
+      }
+  }`);
+
 export const PaginatedProduct = gql(`
   fragment PaginatedProduct on PaginatedProduct {
     edges {
@@ -32,6 +46,8 @@ export const ProductFragment = gql(`
     stock
     ingredients
     origin
+    local
+    peak
     imageUrls {
       thumbnail
       small

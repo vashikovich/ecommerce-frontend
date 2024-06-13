@@ -102,7 +102,7 @@ export default function RegisterForm({ containerClassName }: Props) {
         <p className="text-coral font-bold mb-4">{serverError}</p>
       )}
       <Button
-        text="Register"
+        content="Register"
         variant="primary"
         onClick={handleSubmit}
         fullWidth

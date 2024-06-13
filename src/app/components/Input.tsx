@@ -2,10 +2,6 @@ import classNames from "classnames";
 import React, { InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  type: "text" | "email" | "password";
-  placeholder?: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   startAdornment?: React.ReactNode;
   endAdornment?: React.ReactNode;
   error?: boolean;
@@ -13,18 +9,16 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input: React.FC<InputProps> = ({
-  type,
-  placeholder = "",
-  value,
-  onChange,
   startAdornment = null,
   endAdornment = null,
   error = false,
   className = "",
   ...props
 }) => {
-  const baseClasses =
-    "w-full p-2 rounded focus:outline-none focus:ring-2 bg-white flex border";
+  const baseClasses = classNames(
+    "p-2 rounded focus:outline-none focus:ring-2 bg-white flex border",
+    props.type === "checkbox" || props.type === "radio" ? "w-fit" : "w-full"
+  );
   const validClasses = "border-gray-300 focus:border-blue-900";
   const errorClasses = "border-coral text-coral";
 
@@ -37,14 +31,7 @@ const Input: React.FC<InputProps> = ({
       )}
     >
       {startAdornment && <span>{startAdornment}</span>}
-      <input
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        className="flex-1 px-2 text-black outline-none"
-        {...props}
-      />
+      <input className="flex-1 px-2 text-black outline-none" {...props} />
       {endAdornment && <span>{endAdornment}</span>}
     </div>
   );

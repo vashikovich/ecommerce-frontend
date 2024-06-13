@@ -3,6 +3,7 @@
 import { User } from "@/lib/definitions";
 import {
   Dispatch,
+  PropsWithChildren,
   ReactNode,
   Reducer,
   ReducerAction,
@@ -22,7 +23,7 @@ export const AuthDispatchContext = createContext<Dispatch<AuthAction>>(
   () => {}
 );
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+export function AuthProvider({ children }: PropsWithChildren) {
   const [auth, dispatch] = useReducer(authReducer, clearedAuth);
 
   useEffect(() => {

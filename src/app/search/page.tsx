@@ -16,6 +16,7 @@ import { SearchProductsQuery } from "@/lib/queries";
 import { extractSearchProductsQuery } from "@/lib/queries.utils";
 import Button from "../components/Button";
 import FilterSvg from "@/../public/svg/filter.svg";
+import LoadingSvg from "@/../public/svg/loading-spinner.svg";
 import classNames from "classnames";
 import { useInView } from "react-intersection-observer";
 
@@ -25,22 +26,22 @@ export default function SearchPage() {
 
   const inputVars = buildQueryVarFromParams(params);
   const resultsQuery = useQuery(SearchProductsQuery, {
-    variables: { input: inputVars, first: 12 },
+    variables: { input: inputVars, first: 4 },
   });
   const paginatedProduct = resultsQuery.data
     ?.searchProducts as PaginatedProduct;
   const results = extractSearchProductsQuery(resultsQuery);
-  const lastCursor = paginatedProduct?.edges.slice(-1)[0].cursor;
+  const lastCursor = paginatedProduct?.pageInfo.lastCursor;
 
   const [showFilterModal, setShowFilterModal] = useState(false);
 
   const [ref, inView] = useInView();
 
-  // useEffect(() => {
-  //   if (inView) {
-  //     resultsQuery.fetchMore({ variables: { after: lastCursor } });
-  //   }
-  // }, [inView, resultsQuery, lastCursor]);
+  useEffect(() => {
+    if (inView && !resultsQuery.loading && lastCursor) {
+      resultsQuery.fetchMore({ variables: { after: lastCursor } });
+    }
+  }, [inView, resultsQuery.loading, lastCursor]);
 
   return (
     <div className={classNames("flex max-w-screen-xl mx-auto gap-6")}>
@@ -89,14 +90,12 @@ export default function SearchPage() {
             )}
           >
             <SearchResults products={results} />
-            {/* <p ref={ref}>Loading...</p> */}
-            <Button
-              content="load"
-              onClick={() =>
-                resultsQuery.fetchMore({ variables: { after: lastCursor } })
-              }
-            />
           </div>
+          {results?.length && (
+            <div className="w-6 h-6 mx-auto my-10" ref={ref}>
+              <LoadingSvg />
+            </div>
+          )}
         </div>
       ) : (
         <>Loading...........</>

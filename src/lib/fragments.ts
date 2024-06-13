@@ -23,6 +23,10 @@ export const PaginatedProduct = gql(`
       cursor
     }
     pageInfo {
+      lastCursor
+      hasMore
+    }
+    searchInfo {
       total
       availableBrands {
         brand

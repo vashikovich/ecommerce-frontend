@@ -31,9 +31,9 @@ export default function SearchFilters({
   const pathname = usePathname();
   const router = useRouter();
 
-  const availBrands = paginatedProduct.pageInfo.availableBrands;
+  const availBrands = paginatedProduct.searchInfo.availableBrands;
   const structuredAvailableCats = categories
-    ? structCatFacets(paginatedProduct.pageInfo.availableCategories, categories)
+    ? structCatFacets(paginatedProduct.searchInfo.availableCategories, categories)
     : undefined;
 
   const [brandsExpanded, setBrandsExpanded] = useState(false);

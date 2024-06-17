@@ -8,12 +8,12 @@ import classNames from "classnames";
 import Image from "next/image";
 import TrashCanSvg from "@/../public/svg/trash-can.svg";
 import ShareSvg from "@/../public/svg/share.svg";
-import AtcButton from "@/app/components/AtcButton";
+import AtcButton from "@/app/components/product-card/AtcButton";
 import Carousel from "@/app/components/Carousel";
 import { ApolloQueryResult } from "@apollo/client";
 import { getFragmentData } from "@/__generated__";
-import { PaginatedProduct } from "@/lib/fragments";
-import ProductCard from "@/app/components/ProductCard";
+import { PaginatedProductFragment } from "@/lib/fragments";
+import ProductCard from "@/app/components/product-card/ProductCard";
 
 export default async function ProductPage({
   params,
@@ -44,7 +44,7 @@ export default async function ProductPage({
     queryResult: ApolloQueryResult<SearchProductsQueryType>
   ) => {
     const paginated = getFragmentData(
-      PaginatedProduct,
+      PaginatedProductFragment,
       queryResult.data.searchProducts
     );
     const products = paginated.edges.map((e) => e.node as Product);

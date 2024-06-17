@@ -13,7 +13,7 @@ import { SearchParamsType } from "../components/providers/SearchProvider";
 import SearchFilters from "./SearchFilters";
 import { useQuery } from "@apollo/client";
 import { SearchProductsQuery } from "@/lib/queries";
-import { extractSearchProductsQuery } from "@/lib/queries.utils";
+import { extractProductsFragment } from "@/lib/queries.utils";
 import Button from "../components/Button";
 import FilterSvg from "@/../public/svg/filter.svg";
 import LoadingSvg from "@/../public/svg/loading-spinner.svg";
@@ -31,7 +31,9 @@ export default function SearchPage() {
   });
   const paginatedProduct = resultsQuery.data
     ?.searchProducts as PaginatedProduct;
-  const results = extractSearchProductsQuery(resultsQuery);
+  const results = resultsQuery.data
+    ? extractProductsFragment(resultsQuery.data)
+    : undefined;
   const lastCursor = paginatedProduct?.edges.slice(-1)[0]?.cursor;
   const hasMore = (resultsQuery.data?.searchProducts as PaginatedProduct)
     ?.pageInfo.hasMore;
@@ -41,10 +43,8 @@ export default function SearchPage() {
   const [inViewRef, inView] = useInView();
 
   useEffect(() => {
-    console.log(inView, !resultsQuery.loading, lastCursor, hasMore);
     if (inView && !resultsQuery.loading && lastCursor && hasMore) {
       resultsQuery.fetchMore({ variables: { after: lastCursor } });
-      console.log("more");
     }
   }, [inView, resultsQuery, lastCursor, hasMore]);
 

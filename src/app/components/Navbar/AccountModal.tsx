@@ -1,9 +1,13 @@
+"use client";
+
 import Button from "@/app/components/Button";
 import Link from "next/link";
 import { MouseEventHandler, useContext } from "react";
 import { AuthContext, AuthDispatchContext } from "../providers/AuthProvider";
 import { logout } from "@/lib/authHandlers";
 import NavbarModal from "./NavbarModal";
+import { useRouter } from "next/navigation";
+import { ApolloContext } from "../providers/ApolloProvider";
 
 export default function AccountModal({
   onDismissModal,
@@ -12,17 +16,21 @@ export default function AccountModal({
 }) {
   const auth = useContext(AuthContext);
   const authDispatch = useContext(AuthDispatchContext);
+  const apollo = useContext(ApolloContext);
+  const router = useRouter();
 
   const handleLogout = async () => {
     const response = await logout(auth?.accessToken || "");
     if (!response.error) {
       authDispatch({ type: "CLEAR_AUTH" });
+      router.push("/");
+      await apollo?.clearStore();
     }
   };
 
   return (
     <NavbarModal onOverlayClick={onDismissModal}>
-      <div className="p-4 bg-white">
+      <div className="p-4 bg-white max-h-screen overflow-y-auto pb-20 lg:pb-6 lg:w-80 lg:ml-auto lg:mr-10">
         {auth.user ? (
           <>
             <div className="mb-6 space-y-2">
@@ -57,7 +65,7 @@ export default function AccountModal({
         ) : (
           <div className="flex flex-col gap-4">
             <Link href="/user/login" onClick={onDismissModal}>
-              <Button content="Sign in" variant="ghost-primary" fullWidth />
+              <Button content="Sign In" variant="ghost-primary" fullWidth />
             </Link>
           </div>
         )}

@@ -7,6 +7,7 @@ const Banner = ({ image, title, subtitle, buttonLabel, buttonLink }) => {
         src="https://cdn-endpoint-website.azureedge.net/uploads/UBImageUploadModel/5/mobileImage/bphoto-153-campaign-summer-kickoff_mob.original.jpg?t=1716214744"
         alt="Banner Image"
         fill
+        sizes="100vw"
         className="object-cover -z-50 rounded-lg"
       />
       <div className="bg-black/50 flex flex-col justify-center items-center text-center p-4 h-full z-0 rounded-lg">

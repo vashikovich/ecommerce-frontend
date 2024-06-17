@@ -43,7 +43,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 const authReducer = (auth: AuthType, action: AuthAction) => {
   switch (action.type) {
     case "SAVE_AUTH": {
-      localStorage.setItem("auth", JSON.stringify(action.payload));
+      storeAuth(action.payload);
       return action.payload;
     }
     case "CLEAR_AUTH": {
@@ -58,6 +58,10 @@ export function retrieveAuth() {
     (JSON.parse(localStorage.getItem("auth") || "null") as AuthType) ||
     clearedAuth;
   return auth;
+}
+
+export function storeAuth(auth: AuthType) {
+  localStorage.setItem("auth", JSON.stringify(auth));
 }
 
 export type AuthType = {

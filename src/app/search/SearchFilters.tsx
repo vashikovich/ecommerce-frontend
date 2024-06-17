@@ -61,7 +61,6 @@ export default function SearchFilters({
                 pathname + "?" + createQueryString("s", e.target.value)
               )
             }
-            defaultValue={"r"}
             options={[
               {
                 label: "Relevance",

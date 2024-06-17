@@ -1,6 +1,6 @@
 import { gql } from "@/__generated__/gql";
 
-export const Metadata = gql(`
+export const MetadataFragment = gql(`
   fragment Metadata on Metadata {
       categories {
         id
@@ -14,7 +14,7 @@ export const Metadata = gql(`
       }
   }`);
 
-export const PaginatedProduct = gql(`
+export const PaginatedProductFragment = gql(`
   fragment PaginatedProduct on PaginatedProduct {
     edges {
       node {

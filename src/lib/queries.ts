@@ -32,15 +32,7 @@ export const GetCartQuery = gql(`
   }
 `);
 
-export const AddProductToCartQuery = gql(`
-  mutation addProductToCart($productId: String!) {
-    addProductToCart(productId: $productId) {
-      ...Cart
-    }
-  }
-`);
-
-export const ChangeCartProductQuantityQuery = gql(`
+export const ChangeCartProductQuantityMutation = gql(`
   mutation changeCartProductQuantity($productId: String!, $quantity: Int!) {
     changeCartProductQuantity(productId: $productId, quantity: $quantity) {
       ...Cart
@@ -56,7 +48,7 @@ export const GetOrderQuery = gql(`
   }
 `);
 
-export const CreateOrderQuery = gql(`
+export const CreateOrderMutation = gql(`
   mutation createOrder {
     createOrder {
       ...Order

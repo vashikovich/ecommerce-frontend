@@ -1,24 +1,34 @@
 import { Category } from "@/__generated__/graphql";
 import Image from "next/image";
 import NavbarModal from "./NavbarModal";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import classNames from "classnames";
 
 const CategoryBar = ({ categories }: { categories: Category[] }) => {
   const [activeCategory, setActiveCategory] = useState<number | null>(null);
 
   return (
-    <div className="flex justify-center bg-white">
+    <div
+      className="flex justify-center bg-white"
+      onMouseLeave={() => setActiveCategory(null)}
+    >
       {categories.map((category) => (
         <div key={category.id} className="relative">
           <div
             className="text-blue-900 cursor-pointer py-5 px-3 hover:bg-beige"
-            onMouseEnter={() => setActiveCategory(category.id)}
+            onClick={() =>
+              setActiveCategory((prev) =>
+                prev === category.id ? null : category.id
+              )
+            }
           >
             <h6>{category.name}</h6>
           </div>
           {activeCategory === category.id && (
-            <NavbarModal onOverlayClick={() => setActiveCategory(null)}>
+            <NavbarModal
+              onOverlayClick={() => setActiveCategory(null)}
+              onOverlayEnter={() => setActiveCategory(null)}
+            >
               <div
                 className={classNames(
                   "relative mx-auto bg-white shadow-lg rounded-b max-w-screen-lg grid-cols-4 grid-flow-col grid p-6",
@@ -43,7 +53,6 @@ const CategoryBar = ({ categories }: { categories: Category[] }) => {
                   Math.ceil(category.subcategories.length / 4) === 10 &&
                     "grid-rows-10"
                 )}
-                onMouseLeave={() => setActiveCategory(null)}
               >
                 {category.subcategories.map((subcategory) => (
                   <div key={subcategory.id} className="flex items-center p-2">

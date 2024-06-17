@@ -1,9 +1,9 @@
 import Banner from "./_components/Banner";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/product-card/ProductCard";
 import { query } from "@/lib/apollo-client";
 import Carousel from "../components/Carousel";
 import { SearchProductsQuery } from "@/lib/queries";
-import { extractSearchProductsQuery } from "@/lib/queries.utils";
+import { extractProductsFragment } from "@/lib/queries.utils";
 
 const HomePage = async () => {
   const localProductsQuery = await query({
@@ -43,7 +43,7 @@ const HomePage = async () => {
           gap={30}
           snap="start"
           snapMargin={16}
-          list={extractSearchProductsQuery(localProductsQuery).map(
+          list={extractProductsFragment(localProductsQuery.data).map(
             (product) => (
               <div className="w-60 h-80 mb-5" key={product.id}>
                 <ProductCard product={product} />
@@ -65,11 +65,13 @@ const HomePage = async () => {
           gap={30}
           snap="start"
           snapMargin={16}
-          list={extractSearchProductsQuery(peakProductsQuery).map((product) => (
-            <div className="w-60 h-80 mb-5" key={product.id}>
-              <ProductCard product={product} />
-            </div>
-          ))}
+          list={extractProductsFragment(peakProductsQuery.data).map(
+            (product) => (
+              <div className="w-60 h-80 mb-5" key={product.id}>
+                <ProductCard product={product} />
+              </div>
+            )
+          )}
         />
       </section>
     </main>

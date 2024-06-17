@@ -1,13 +1,14 @@
 import { Lato, Poppins } from "next/font/google";
 import "./globals.css";
-import { ApolloWrapper } from "./ApolloWrapper";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/Footer";
 import { AuthProvider } from "./components/providers/AuthProvider";
 import { SearchProvider } from "./components/providers/SearchProvider";
 import { query } from "@/lib/apollo-client";
 import { GetCategoriesQuery } from "@/lib/queries";
-import { Metadata } from "@/__generated__/graphql";
+import { Metadata as MetadataGql } from "@/__generated__/graphql";
+import { Metadata } from "next";
+import { ApolloProvider } from "./components/providers/ApolloProvider";
 
 const poppins = Poppins({
   weight: ["300", "500"],
@@ -35,13 +36,13 @@ export default async function RootLayout({
     query: GetCategoriesQuery,
   });
 
-  const categories = (categoriesQuery.data.metadata as Metadata).categories;
+  const categories = (categoriesQuery.data.metadata as MetadataGql).categories;
 
   return (
     <html lang="en" className={`${poppins.variable} ${lato.variable}`}>
       <body>
         <ComposedProviders
-          providers={[ApolloWrapper, AuthProvider, SearchProvider]}
+          providers={[ApolloProvider, AuthProvider, SearchProvider]}
         >
           <Navbar categories={categories} />
           <div className="pt-[120px] lg:pt-36">{children}</div>

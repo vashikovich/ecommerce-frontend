@@ -6,13 +6,23 @@ import {
   ApolloClient,
   InMemoryCache,
 } from "@apollo/experimental-nextjs-app-support";
-import { retrieveAuth } from "./components/providers/AuthProvider";
+import {
+  AuthDispatchContext,
+  AuthType,
+  retrieveAuth,
+  storeAuth,
+} from "./AuthProvider";
 import { onError } from "@apollo/link-error";
 import { refresh } from "@/lib/authHandlers";
 import { Product } from "@/__generated__/graphql";
+import { createContext, useContext } from "react";
+import { useRouter } from "next/navigation";
 
 const cache = new InMemoryCache({
   typePolicies: {
+    Cart: {
+      keyFields: ["userId"],
+    },
     Query: {
       fields: {
         metadata: {
@@ -68,8 +78,8 @@ const authLink = new ApolloLink((operation, forward) => {
     const authInfo = retrieveAuth();
     return {
       headers: {
-        authorization: "Bearer " + authInfo.accessToken,
         ...headers,
+        authorization: "Bearer " + authInfo.accessToken,
       },
     };
   });
@@ -84,8 +94,14 @@ const resolvePendingRequests = () => {
   pendingRequests = [];
 };
 
-const errorLink = onError(
-  ({ graphQLErrors, networkError, operation, forward }) => {
+const errorLink = ({
+  handleAuthError,
+  handleAuthRefresh,
+}: {
+  handleAuthError: () => Promise<void>;
+  handleAuthRefresh: (payload: AuthType) => void;
+}) =>
+  onError(({ graphQLErrors, networkError, operation, forward }) => {
     if (graphQLErrors) {
       for (let err of graphQLErrors) {
         switch (err.extensions.code) {
@@ -97,13 +113,18 @@ const errorLink = onError(
               const auth = retrieveAuth();
               forward$ = fromPromise(
                 refresh(auth.user, auth.refreshToken)
-                  .then(() => {
+                  .then((data) => {
+                    handleAuthRefresh({
+                      user: data.user,
+                      accessToken: data.tokenInfo.accessToken,
+                      refreshToken: data.tokenInfo.refreshToken,
+                    });
                     resolvePendingRequests();
+                    return data;
                   })
                   .catch((error) => {
                     pendingRequests = [];
-                    // Handle token refresh errors e.g clear stored tokens, redirect to login, ...
-                    return;
+                    return handleAuthError();
                   })
                   .finally(() => {
                     isRefreshing = false;
@@ -128,20 +149,57 @@ const errorLink = onError(
       // network errors, we recommend that you use
       // apollo-link-retry
     }
-  }
-);
+  });
 
-function makeClient() {
+function makeClient({
+  handleAuthError,
+  handleAuthRefresh,
+}: {
+  handleAuthError: () => Promise<void>;
+  handleAuthRefresh: (payload: AuthType) => void;
+}) {
   return new ApolloClient({
     cache: cache,
-    link: from([errorLink, authLink, httpLink]),
+    link: from([
+      errorLink({ handleAuthError, handleAuthRefresh }),
+      authLink,
+      httpLink,
+    ]),
   });
 }
 
-export function ApolloWrapper({ children }: React.PropsWithChildren) {
+export const ApolloContext = createContext<ApolloClient<unknown> | undefined>(
+  undefined
+);
+
+export function ApolloProvider({ children }: React.PropsWithChildren) {
+  const authDispatch = useContext(AuthDispatchContext);
+  const router = useRouter();
+
+  const handleAuthError = async () => {
+    authDispatch({
+      type: "CLEAR_AUTH",
+    });
+    router.push("/");
+    await client.clearStore();
+    await client.cache.reset();
+  };
+
+  const handleAuthRefresh = (auth: AuthType) => {
+    storeAuth(auth);
+  };
+
+  const client = makeClient({ handleAuthError, handleAuthRefresh });
+  client.onResetStore(async () => {
+    console.log("reset");
+  });
+  client.onClearStore(async () => {
+    console.log("clear");
+  });
+
   return (
-    <ApolloNextAppProvider makeClient={makeClient}>
-      {children}
+    <ApolloNextAppProvider makeClient={() => client}>
+      <ApolloContext.Provider value={client}>{children}</ApolloContext.Provider>
     </ApolloNextAppProvider>
   );
 }

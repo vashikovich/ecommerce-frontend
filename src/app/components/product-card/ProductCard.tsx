@@ -1,5 +1,4 @@
 import { Product } from "@/__generated__/graphql";
-import classNames from "classnames";
 import Image from "next/image";
 import React from "react";
 import AtcButton from "./AtcButton";
@@ -21,6 +20,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <Image
             src={product.imageUrls[0].small}
             fill
+            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             alt={product.name}
             className="object-cover"
           />

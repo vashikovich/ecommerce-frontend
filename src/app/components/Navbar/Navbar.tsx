@@ -51,7 +51,7 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
           </div>
           <div className="lg:ml-4 flex-1 flex justify-center lg:justify-start items-center h-14 lg:h-20 w-1/2 mx-auto z-10">
             <div className="w-32 lg:w-40">
-              <Link href="/">
+              <Link href="/" onClick={() => setModalOpen("NONE")}>
                 <Image src={LogoImg} alt="Logo" className="object-contain" />
               </Link>
             </div>
@@ -61,9 +61,9 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
           </div>
           <div className="flex justify-end ml-auto space-x-2 lg:hidden">
             {/* {auth.user && ( */}
-              <div className="h-6 w-6" onClick={() => toggleModal("CART")}>
-                <CartSvg fill="white" />
-              </div>
+            <div className="h-6 w-6" onClick={() => toggleModal("CART")}>
+              <CartSvg fill="white" />
+            </div>
             {/* )} */}
             <div className="h-7 w-7" onClick={() => toggleModal("ACCOUNT")}>
               <AccountSvg fill="white" />

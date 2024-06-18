@@ -53,7 +53,7 @@ export default async function ProductPage({
 
   return (
     <div className="flex flex-col max-w-screen-lg mx-auto">
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col lg:flex-row gap-20">
         <div className="flex flex-col w-full">
           <div className="w-6 h-6 self-end px-4 lg:hidden">
             <ShareSvg />

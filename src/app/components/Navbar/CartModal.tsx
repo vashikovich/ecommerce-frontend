@@ -7,6 +7,8 @@ import { MouseEventHandler, useContext } from "react";
 import { useQuery } from "@apollo/client";
 import { GetCartQuery } from "@/lib/queries";
 import { Cart } from "@/__generated__/graphql";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CartModal({
   onDismissModal,
@@ -14,6 +16,7 @@ export default function CartModal({
   onDismissModal: MouseEventHandler;
 }) {
   const cartQuery = useQuery(GetCartQuery);
+  const router = useRouter();
 
   if (cartQuery.loading) return null;
 
@@ -34,17 +37,14 @@ export default function CartModal({
               alt="img"
             />
             <div className="flex-1 ml-2">
-              <p>{i.product?.name}</p>
-              <h6 className="text-xs font-bold">
-                {i.product?.brand || `\u0010`}
+              <h6 className="text-xs font-bold text-light-gray">
+                {i.product?.brand}
               </h6>
+              <p>{i.product?.name}</p>
             </div>
-            <div className="flex flex-col items-center mr-5">
-              <p>{i.quantity}</p>
+            <div className="flex flex-col items-end">
+              <p>{i.quantity} ea.</p>
               <h6 className="text-xs font-bold">{i.product?.size}</h6>
-            </div>
-            <div className="min-w-16">
-              <p className="font-bold">${i.product?.price}</p>
             </div>
           </div>
         ))}
@@ -57,7 +57,15 @@ export default function CartModal({
           </div>
         </div>
         <div className="flex justify-center">
-          <Button content="View Cart" variant="secondary" fullWidth />
+          <Button
+            content="View Cart"
+            variant="secondary"
+            fullWidth
+            onClick={(e) => {
+              router.push("/cart");
+              onDismissModal(e);
+            }}
+          />
         </div>
       </div>
     </NavbarModal>

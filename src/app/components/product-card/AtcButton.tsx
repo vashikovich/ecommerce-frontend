@@ -98,7 +98,7 @@ export default function AtcButton({ product }: AtcButtonProps) {
             className={classNames(
               "flex w-1/4 items-center justify-center font-bold focus:outline-none text-lg bg-blue-900 border-2 cursor-pointer h-full",
               (product?.stock ?? 0) > quantity
-                ? "border-blue-900 text-blue-900 hover:bg-blue-900 hover:text-white"
+                ? "border-blue-900 text-white hover:bg-blue-900 hover:text-white"
                 : "bg-light-gray border-light-gray text-white"
             )}
             onClick={() =>

@@ -11,7 +11,7 @@ import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import SearchResults from "./SearchResults";
 import { SearchParamsType } from "../components/providers/SearchProvider";
 import SearchFilters from "./SearchFilters";
-import { useQuery } from "@apollo/client";
+import { NetworkStatus, useQuery } from "@apollo/client";
 import { SearchProductsQuery } from "@/lib/queries";
 import { extractProductsFragment } from "@/lib/queries.utils";
 import Button from "../components/Button";
@@ -19,6 +19,7 @@ import FilterSvg from "@/../public/svg/filter.svg";
 import LoadingSvg from "@/../public/svg/loading-spinner.svg";
 import classNames from "classnames";
 import { useInView } from "react-intersection-observer";
+import ProductCardSkeleton from "../components/skeletons/ProductCardSkeleton";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
@@ -82,24 +83,27 @@ export default function SearchPage() {
           )}
         </div>
       )}
-      {results ? (
-        <div className="flex flex-col">
-          <div
-            className={classNames(
-              "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 px-4 h-fit"
-            )}
-          >
+
+      <div className="flex flex-col flex-1">
+        <div
+          className={classNames(
+            "grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 px-4 h-fit "
+          )}
+        >
+          {resultsQuery.loading &&
+            resultsQuery.networkStatus !== NetworkStatus.fetchMore &&
+            Array(8).fill(<ProductCardSkeleton />)}
+          {results && Boolean(results?.length) && (
             <SearchResults products={results} />
-          </div>
-          {!resultsQuery.loading && hasMore && (
-            <div className="w-10 h-10 mx-auto my-10" ref={inViewRef}>
-              <LoadingSvg />
-            </div>
           )}
         </div>
-      ) : (
-        <>Loading...........</>
-      )}
+        {!resultsQuery.loading && hasMore && (
+          <div className="w-10 h-10 mx-auto my-10 animate-spin" ref={inViewRef}>
+            <LoadingSvg />
+          </div>
+        )}
+      </div>
+
       <div className="fixed lg:hidden bottom-5 right-5">
         <Button
           content={

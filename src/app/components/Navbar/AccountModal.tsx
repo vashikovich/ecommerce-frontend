@@ -50,9 +50,11 @@ export default function AccountModal({
                   <h6>Orders & Invoices</h6>
                 </div>
               </Link>
-              <div className="py-3 border-t-2 border-t-light-gray">
-                <h6>Account Settings</h6>
-              </div>
+              <Link href="/user/profile" onClick={onDismissModal}>
+                <div className="py-3 border-t-2 border-t-light-gray">
+                  <h6>Account Profile</h6>
+                </div>
+              </Link>
               <div
                 className="py-3 border-t-2 border-t-light-gray"
                 onClick={(e) => {

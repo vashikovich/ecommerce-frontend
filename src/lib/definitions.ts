@@ -11,7 +11,6 @@ export type RegisterDto = {
 export type User = {
   id: string;
   email: string;
-  passwordHash?: string;
   displayName?: string;
 };
 

@@ -91,3 +91,11 @@ export const OrderFragment = gql(`
     }
   }
 `);
+
+export const UserFragment = gql(`
+  fragment User on User {
+    id
+    email
+    displayName
+  }
+  `);

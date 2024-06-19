@@ -63,3 +63,11 @@ export const CreateOrderMutation = gql(`
     }
   }
 `);
+
+export const UpdateUserMutation = gql(`
+  mutation updateUser($input: UpdateUserInput!) {
+    updateUser(input: $input) {
+      ...User
+    }
+  }
+`);

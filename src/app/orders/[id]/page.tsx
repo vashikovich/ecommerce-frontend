@@ -21,7 +21,7 @@ export default function OrderDetailsPage({
     <div className="p-4 flex-col lg:max-w-screen-lg lg:mx-auto">
       <div className="flex gap-3 items-baseline">
         <h2 className="text-3xl my-2 lg:my-10">Order</h2>
-        <h4 className="text-xl my-2 lg:my-10">no. {order.id}</h4>
+        <h4 className="text-xl my-2 lg:my-10 text-medium-gray">no. {order.id}</h4>
       </div>
       <div className="flex flex-col-reverse lg:flex-row lg:gap-6">
         <div className="w-full lg:border-2 lg:p-10">

@@ -46,6 +46,11 @@ const authReducer = (auth: AuthType, action: AuthAction) => {
       storeAuth(action.payload);
       return action.payload;
     }
+    case "SAVE_USER": {
+      const newAuth: AuthType = { ...auth, user: action.payload };
+      storeAuth(newAuth);
+      return newAuth;
+    }
     case "CLEAR_AUTH": {
       localStorage.removeItem("auth");
       return clearedAuth;
@@ -74,6 +79,10 @@ type AuthAction =
   | {
       type: "SAVE_AUTH";
       payload: AuthType;
+    }
+  | {
+      type: "SAVE_USER";
+      payload: User;
     }
   | {
       type: "CLEAR_AUTH";

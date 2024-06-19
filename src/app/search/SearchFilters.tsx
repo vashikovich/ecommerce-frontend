@@ -32,6 +32,7 @@ export default function SearchFilters({
   const router = useRouter();
 
   const availBrands = paginatedProduct.searchInfo.availableBrands;
+  const availCats = paginatedProduct.searchInfo.availableCategories;
   const structuredAvailableCats = categories
     ? structCatFacets(
         paginatedProduct.searchInfo.availableCategories,
@@ -179,7 +180,7 @@ export default function SearchFilters({
             </div>
           </div>
         )}
-        {categories && structuredAvailableCats && (
+        {categories && structuredAvailableCats && Boolean(availCats?.length) && (
           <div className="space-y-2">
             <p className="font-bold">Categories</p>
             <div className="border-2 rounded p-2 space-y-3">

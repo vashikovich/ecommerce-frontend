@@ -20,6 +20,7 @@ import LoadingSvg from "@/../public/svg/loading-spinner.svg";
 import classNames from "classnames";
 import { useInView } from "react-intersection-observer";
 import ProductCardSkeleton from "../components/skeletons/ProductCardSkeleton";
+import SearchFiltersSkeleton from "../components/skeletons/SearchFiltersSkeleton";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
@@ -27,7 +28,7 @@ export default function SearchPage() {
 
   const inputVars = buildQueryVarFromParams(params);
   const resultsQuery = useQuery(SearchProductsQuery, {
-    variables: { input: inputVars, first: 4 },
+    variables: { input: inputVars, first: 8 },
     notifyOnNetworkStatusChange: true,
   });
   const paginatedProduct = resultsQuery.data
@@ -42,6 +43,11 @@ export default function SearchPage() {
   const [showFilterModal, setShowFilterModal] = useState(false);
 
   const [inViewRef, inView] = useInView();
+
+  const searchTerm = searchParams.get("q") ?? "";
+  useEffect(() => {
+    setShowFilterModal(false);
+  }, [searchTerm]);
 
   useEffect(() => {
     if (inView && !resultsQuery.loading && lastCursor && hasMore) {
@@ -59,7 +65,7 @@ export default function SearchPage() {
         {paginatedProduct ? (
           <SearchFilters params={params} paginatedProduct={paginatedProduct} />
         ) : (
-          <>Loading</>
+          <SearchFiltersSkeleton />
         )}
       </div>
       {showFilterModal && (
@@ -79,7 +85,7 @@ export default function SearchPage() {
               </div>
             </div>
           ) : (
-            <>Loading</>
+            <SearchFiltersSkeleton />
           )}
         </div>
       )}
@@ -104,20 +110,22 @@ export default function SearchPage() {
         )}
       </div>
 
-      <div className="fixed lg:hidden bottom-5 right-5">
-        <Button
-          content={
-            <div className="w-6 h-6">
-              <FilterSvg fill="white" />
-            </div>
-          }
-          size="large"
-          variant="primary"
-          circular
-          iconOnly
-          onClick={() => setShowFilterModal(true)}
-        />
-      </div>
+      {paginatedProduct && (
+        <div className="fixed lg:hidden bottom-5 right-5">
+          <Button
+            content={
+              <div className="w-6 h-6">
+                <FilterSvg fill="white" />
+              </div>
+            }
+            size="large"
+            variant="primary"
+            circular
+            iconOnly
+            onClick={() => setShowFilterModal(true)}
+          />
+        </div>
+      )}
     </div>
   );
 }

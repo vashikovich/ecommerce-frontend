@@ -9,27 +9,17 @@ export default function SearchBar() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const queryFromParams = searchParams.get("q") ?? "";
+  const searchTerm = searchParams.get("q") ?? "";
 
-  const [search, setSearch] = useState(queryFromParams);
+  const [search, setSearch] = useState(searchTerm);
 
   useEffect(() => {
-    setSearch(queryFromParams);
-  }, [queryFromParams]);
-
-  const createQueryString = useCallback(
-    (name: string, value: string | undefined | null) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value ?? "");
-
-      return params.toString();
-    },
-    [searchParams]
-  );
+    setSearch(searchTerm);
+  }, [searchTerm]);
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === "Enter") {
-      router.push("/search?" + createQueryString("q", search));
+      router.push("/search?q=" + search);
     }
   };
 

@@ -12,6 +12,7 @@ export default function LoginPage() {
       <div className="flex flex-col lg:flex-row gap-4 w-full mb-4">
         <Button
           content="Google"
+          variant="ghost-primary"
           className="bg-white border-gray-900 text-gray-900 hover:bg-light-gray hover:border-gray-900"
           iconStart={
             <div className="w-6 h-6">

@@ -79,6 +79,7 @@ export const OrderFragment = gql(`
     userId
     totalAmount
     status
+    date
     items {
       productId
       name

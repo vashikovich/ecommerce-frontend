@@ -1,24 +1,39 @@
 "use client";
 
 import { Cart } from "@/__generated__/graphql";
-import { ChangeCartProductQuantityMutation, GetCartQuery } from "@/lib/queries";
+import {
+  ChangeCartProductQuantityMutation,
+  CreateOrderMutation,
+  GetCartQuery,
+} from "@/lib/queries";
 import { useMutation, useQuery } from "@apollo/client";
 import classNames from "classnames";
 import Image from "next/image";
 import AtcButton from "../components/product-card/AtcButton";
 import Button from "../components/Button";
 import TrashCanSvg from "@/../public/svg/trash-can.svg";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
   const cartQuery = useQuery(GetCartQuery);
+  const router = useRouter();
 
   const [changeQty, changeQtyQuery] = useMutation(
     ChangeCartProductQuantityMutation
   );
 
+  const [createOrder, createOrderQuery] = useMutation(CreateOrderMutation, {
+    refetchQueries: [GetCartQuery],
+  });
+
   if (cartQuery.loading) return null;
 
   const cart = cartQuery.data?.cart as Cart;
+
+  const handlePlaceOrder = async () => {
+    await createOrder();
+    router.push("/");
+  };
 
   return (
     <div className="p-4 flex-col lg:max-w-screen-xl lg:mx-auto">
@@ -97,7 +112,15 @@ export default function CartPage() {
               </p>
             </div>
           </div>
-          <Button fullWidth content="Order" variant="secondary" />
+          <Button
+            fullWidth
+            content="Place Order"
+            variant="secondary"
+            onClick={() => {
+              createOrder();
+              router.push("/");
+            }}
+          />
         </div>
       </div>
     </div>

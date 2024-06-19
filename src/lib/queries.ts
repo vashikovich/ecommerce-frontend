@@ -48,6 +48,14 @@ export const GetOrderQuery = gql(`
   }
 `);
 
+export const GetOrdersByUserQuery = gql(`
+  query getOrdersByUser {
+    ordersByUser {
+      ...Order
+    }
+  }
+`);
+
 export const CreateOrderMutation = gql(`
   mutation createOrder {
     createOrder {

@@ -3,13 +3,19 @@
 import Input from "@/app/components/Input";
 import SearchSvg from "@/../public/svg/search.svg";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { KeyboardEventHandler, useCallback, useState } from "react";
+import { KeyboardEventHandler, useCallback, useEffect, useState } from "react";
 
 export default function SearchBar() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const [search, setSearch] = useState(searchParams.get("q") ?? "");
+  const queryFromParams = searchParams.get("q") ?? "";
+
+  const [search, setSearch] = useState(queryFromParams);
+
+  useEffect(() => {
+    setSearch(queryFromParams);
+  }, [queryFromParams]);
 
   const createQueryString = useCallback(
     (name: string, value: string | undefined | null) => {

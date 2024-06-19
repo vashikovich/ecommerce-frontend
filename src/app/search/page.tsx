@@ -129,7 +129,10 @@ function parseParams(searchParams: ReadonlyURLSearchParams) {
         : searchParams.get("s")?.toLowerCase() === "pd"
         ? "price,desc"
         : "relevance",
-    brands: searchParams.get("br")?.split(","),
+    brands: searchParams
+      .get("br")
+      ?.split(",")
+      .filter((b) => b),
     categories: searchParams
       .get("cat")
       ?.split(",")

@@ -33,7 +33,10 @@ export default function SearchFilters({
 
   const availBrands = paginatedProduct.searchInfo.availableBrands;
   const structuredAvailableCats = categories
-    ? structCatFacets(paginatedProduct.searchInfo.availableCategories, categories)
+    ? structCatFacets(
+        paginatedProduct.searchInfo.availableCategories,
+        categories
+      )
     : undefined;
 
   const [brandsExpanded, setBrandsExpanded] = useState(false);
@@ -42,7 +45,11 @@ export default function SearchFilters({
   const createQueryString = useCallback(
     (name: string, value: string | undefined | null) => {
       const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value ?? "");
+      if (value === undefined || value === null || value.trim() === "") {
+        params.delete(name);
+      } else {
+        params.set(name, value ?? "");
+      }
 
       return params.toString();
     },
@@ -130,7 +137,7 @@ export default function SearchFilters({
                   <label className="flex gap-2 items-baseline" key={b.brand}>
                     <input
                       type="checkbox"
-                      checked={params.brands?.includes(b.brand)}
+                      checked={Boolean(params.brands?.includes(b.brand))}
                       onChange={() =>
                         router.push(
                           pathname +
@@ -210,7 +217,9 @@ export default function SearchFilters({
                         >
                           <input
                             type="checkbox"
-                            checked={params.categories?.includes(sc.id)}
+                            checked={Boolean(
+                              params.categories?.includes(sc.id)
+                            )}
                             onChange={() =>
                               router.push(
                                 pathname +

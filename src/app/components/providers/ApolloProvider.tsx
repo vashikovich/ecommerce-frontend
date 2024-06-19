@@ -25,17 +25,8 @@ const cache = new InMemoryCache({
     },
     Query: {
       fields: {
-        metadata: {
-          keyArgs: false,
-          merge(existing, incoming) {
-            return incoming;
-          },
-          read(existing) {
-            return existing;
-          },
-        },
         searchProducts: {
-          keyArgs: false,
+          keyArgs: ["input"],
           merge(existing, incoming) {
             const existingEdges = existing?.edges || [];
             const incomingEdges = incoming?.edges || [];

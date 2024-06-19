@@ -3,7 +3,7 @@
 import Button from "@/app/components/Button";
 import Input from "@/app/components/Input";
 import { AuthDispatchContext } from "@/app/components/providers/AuthProvider";
-import { register } from "@/lib/authHandlers";
+import { register } from "@/lib/restApiHandlers";
 import classNames from "classnames";
 import { useRouter } from "next/navigation";
 import {

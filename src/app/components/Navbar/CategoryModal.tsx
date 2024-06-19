@@ -5,6 +5,7 @@ import { MouseEventHandler, useState } from "react";
 import classNames from "classnames";
 import { Category } from "@/__generated__/graphql";
 import NavbarModal from "./NavbarModal";
+import Link from "next/link";
 
 export default function CategoryModal({
   categories,
@@ -57,19 +58,22 @@ export default function CategoryModal({
               {isExpanded(cat.id) && (
                 <div>
                   {cat.subcategories.map((subcat) => (
-                    <div
-                      className="flex items-center my-4 ml-4"
+                    <Link
                       key={subcat.id}
+                      href={`/search?cat=${subcat.id}`}
+                      onClick={onDismissModal}
                     >
-                      <Image
-                        src={subcat.image}
-                        width={35}
-                        height={35}
-                        alt=""
-                        className="mr-3"
-                      />
-                      <h6 className="flex-1 text-sm">{subcat.name}</h6>
-                    </div>
+                      <div className="flex items-center my-4 ml-4">
+                        <Image
+                          src={subcat.image}
+                          width={35}
+                          height={35}
+                          alt=""
+                          className="mr-3"
+                        />
+                        <h6 className="flex-1 text-sm">{subcat.name}</h6>
+                      </div>
+                    </Link>
                   ))}
                 </div>
               )}

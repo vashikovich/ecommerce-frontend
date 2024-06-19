@@ -8,6 +8,10 @@ export type RegisterDto = {
   password: string;
 };
 
+export type SubscribeDto = {
+  email: string;
+};
+
 export type User = {
   id: string;
   email: string;

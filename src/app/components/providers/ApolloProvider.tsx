@@ -13,7 +13,7 @@ import {
   storeAuth,
 } from "./AuthProvider";
 import { onError } from "@apollo/link-error";
-import { refresh } from "@/lib/authHandlers";
+import { refresh } from "@/lib/restApiHandlers";
 import { Product } from "@/__generated__/graphql";
 import { createContext, useContext } from "react";
 import { useRouter } from "next/navigation";
@@ -180,9 +180,8 @@ export function ApolloProvider({ children }: React.PropsWithChildren) {
     authDispatch({
       type: "CLEAR_AUTH",
     });
-    router.push("/");
     await client.clearStore();
-    await client.cache.reset();
+    router.push("/");
   };
 
   const handleAuthRefresh = (auth: AuthType) => {
@@ -190,12 +189,6 @@ export function ApolloProvider({ children }: React.PropsWithChildren) {
   };
 
   const client = makeClient({ handleAuthError, handleAuthRefresh });
-  client.onResetStore(async () => {
-    console.log("reset");
-  });
-  client.onClearStore(async () => {
-    console.log("clear");
-  });
 
   return (
     <ApolloNextAppProvider makeClient={() => client}>

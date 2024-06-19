@@ -3,6 +3,7 @@ import Image from "next/image";
 import NavbarModal from "./NavbarModal";
 import { useRef, useState } from "react";
 import classNames from "classnames";
+import Link from "next/link";
 
 const CategoryBar = ({ categories }: { categories: Category[] }) => {
   const [activeCategory, setActiveCategory] = useState<number | null>(null);
@@ -55,16 +56,22 @@ const CategoryBar = ({ categories }: { categories: Category[] }) => {
                 )}
               >
                 {category.subcategories.map((subcategory) => (
-                  <div key={subcategory.id} className="flex items-center p-2">
-                    <Image
-                      src={subcategory.image}
-                      alt={subcategory.name}
-                      width={100}
-                      height={100}
-                      className="h-8 w-8 mr-2"
-                    />
-                    <span>{subcategory.name}</span>
-                  </div>
+                  <Link
+                    key={subcategory.id}
+                    href={`/search?cat=${subcategory.id}`}
+                    onClick={() => setActiveCategory(null)}
+                  >
+                    <div className="flex items-center p-2">
+                      <Image
+                        src={subcategory.image}
+                        alt={subcategory.name}
+                        width={100}
+                        height={100}
+                        className="h-8 w-8 mr-2"
+                      />
+                      <span>{subcategory.name}</span>
+                    </div>
+                  </Link>
                 ))}
               </div>
             </NavbarModal>

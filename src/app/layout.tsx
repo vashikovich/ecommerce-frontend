@@ -1,7 +1,7 @@
 import { Lato, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
-import Footer from "./components/Footer";
+import Footer from "./components/footer/Footer";
 import { AuthProvider } from "./components/providers/AuthProvider";
 import { SearchProvider } from "./components/providers/SearchProvider";
 import { query } from "@/lib/apollo-client";
@@ -42,7 +42,7 @@ export default async function RootLayout({
     <html lang="en" className={`${poppins.variable} ${lato.variable}`}>
       <body>
         <ComposedProviders
-          providers={[ApolloProvider, AuthProvider, SearchProvider]}
+          providers={[AuthProvider, ApolloProvider, SearchProvider]}
         >
           <Navbar categories={categories} />
           <div className="pt-[120px] lg:pt-36">{children}</div>

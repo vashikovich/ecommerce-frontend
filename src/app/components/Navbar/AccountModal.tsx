@@ -4,7 +4,7 @@ import Button from "@/app/components/Button";
 import Link from "next/link";
 import { MouseEventHandler, useContext } from "react";
 import { AuthContext, AuthDispatchContext } from "../providers/AuthProvider";
-import { logout } from "@/lib/authHandlers";
+import { logout } from "@/lib/restApiHandlers";
 import NavbarModal from "./NavbarModal";
 import { useRouter } from "next/navigation";
 import { ApolloContext } from "../providers/ApolloProvider";

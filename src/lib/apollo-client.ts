@@ -11,7 +11,7 @@ const cache = new InMemoryCache();
 
 const httpLink = new HttpLink({
   uri: process.env.NEXT_PUBLIC__API_HOST + "/graphql",
-  // fetchOptions: { cache: "no-store" },
+  fetchOptions: { cache: "no-store" },
 });
 
 const errorLink = onError(

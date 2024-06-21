@@ -53,9 +53,9 @@ export default async function ProductPage({
       <div className="flex flex-col max-w-screen-lg mx-auto">
         <div className="flex flex-col lg:flex-row gap-20">
           <div className="flex flex-col w-full">
-            <div className="w-6 h-6 self-end px-4 lg:hidden">
+            {/* <div className="w-6 h-6 self-end px-4 lg:hidden">
               <ShareSvg />
-            </div>
+            </div> */}
             <div className="w-full">
               <Carousel
                 visibleCount={1}
@@ -116,9 +116,9 @@ export default async function ProductPage({
 
           <div className="hidden lg:flex flex-col border-2 p-8 h-fit min-w-96">
             <div className="flex flex-col">
-              <div className="w-6 h-6 self-end">
+              {/* <div className="w-6 h-6 self-end">
                 <ShareSvg />
-              </div>
+              </div> */}
               <h5 className="text-medium-gray">{product.brand ?? `\u00A0`}</h5>
               <p className="text-3xl font-bold mb-2">{product.name}</p>
               <div className="flex items-baseline gap-2">

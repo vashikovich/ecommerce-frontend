@@ -4,17 +4,15 @@ import {
 } from "@/__generated__/graphql";
 import { query } from "@/lib/apollo-client";
 import { GetProductDetailsQuery, SearchProductsQuery } from "@/lib/queries";
-import classNames from "classnames";
 import Image from "next/image";
-import TrashCanSvg from "@/../public/svg/trash-can.svg";
 import ShareSvg from "@/../public/svg/share.svg";
-import AtcButton from "@/app/components/product-card/AtcButton";
 import Carousel from "@/app/components/Carousel";
 import { ApolloQueryResult } from "@apollo/client";
 import { getFragmentData } from "@/__generated__";
 import { PaginatedProductFragment } from "@/lib/fragments";
 import ProductCard from "@/app/components/product-card/ProductCard";
 import { notFound } from "next/navigation";
+import AtcButtonWrapper from "@/app/components/product-card/AtcButtonWrapper";
 
 export default async function ProductPage({
   params,
@@ -89,7 +87,7 @@ export default async function ProductPage({
                 </div>
               </div>
               <div className="w-full mt-5 md:w-1/4 md:self-end">
-                <AtcButton product={product} />
+                <AtcButtonWrapper product={product} />
               </div>
             </div>
             <div className="flex flex-col mt-6 pt-6 border-t-2 px-4">
@@ -131,7 +129,7 @@ export default async function ProductPage({
                 <p className="text-lg">{product.size}</p>
               </div>
               <div className="w-full mt-5">
-                <AtcButton product={product} />
+                <AtcButtonWrapper product={product} />
               </div>
             </div>
           </div>

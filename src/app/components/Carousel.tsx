@@ -28,6 +28,32 @@ export default function Carousel({
     undefined
   );
 
+  const [scrollPos, setScrollPos] = useState(["FAR_LEFT"]);
+
+  const calcScrollPos = () => {
+    if (!containerRef.current || contentWidth === undefined) return;
+
+    const pos = [];
+
+    const isFarLeft = containerRef.current.scrollLeft < 0.1 * contentWidth;
+    if (isFarLeft) pos.push("FAR_LEFT");
+
+    const isFarRight =
+      Math.abs(
+        containerRef.current.scrollWidth -
+          containerRef.current.clientWidth -
+          containerRef.current.scrollLeft
+      ) <
+      0.1 * contentWidth;
+    if (isFarRight) pos.push("FAR_RIGHT");
+    console.log(
+      containerRef.current.scrollLeft,
+      containerRef.current.scrollWidth,
+      containerRef.current.clientWidth
+    );
+    setScrollPos(pos);
+  };
+
   useEffect(() => {
     const resizeObserver = new ResizeObserver(() => {
       if (containerRef.current !== null)
@@ -51,7 +77,8 @@ export default function Carousel({
 
   const scrollRight = () => {
     if (containerRef.current) {
-      containerRef.current.scrollLeft += (contentWidth + gap) * scrollCount;
+      containerRef.current.scrollLeft +=
+        (Number(contentWidth) + gap) * scrollCount;
     }
   };
 
@@ -65,28 +92,32 @@ export default function Carousel({
   return (
     <div className="relative">
       <div className="hidden lg:block">
-        <div className="absolute -right-5 inset-y-auto h-full flex items-center z-10 pb-10">
-          <Button
-            variant="ghost-primary"
-            iconOnly
-            circular
-            onClick={scrollRight}
-            className="bg-white"
-          >
-            {">"}
-          </Button>
-        </div>
-        <div className="absolute -left-5 inset-y-auto h-full flex items-center z-10 pb-10">
-          <Button
-            variant="ghost-primary"
-            iconOnly
-            circular
-            onClick={scrollLeft}
-            className="bg-white"
-          >
-            {"<"}
-          </Button>
-        </div>
+        {!scrollPos.includes("FAR_RIGHT") && (
+          <div className="absolute -right-5 inset-y-auto h-full flex items-center z-10 pb-10">
+            <Button
+              variant="ghost-primary"
+              iconOnly
+              circular
+              onClick={scrollRight}
+              className="bg-white"
+            >
+              {">"}
+            </Button>
+          </div>
+        )}
+        {!scrollPos.includes("FAR_LEFT") && (
+          <div className="absolute -left-5 inset-y-auto h-full flex items-center z-10 pb-10">
+            <Button
+              variant="ghost-primary"
+              iconOnly
+              circular
+              onClick={scrollLeft}
+              className="bg-white"
+            >
+              {"<"}
+            </Button>
+          </div>
+        )}
       </div>
       <div
         className="relative overflow-hidden"
@@ -101,6 +132,7 @@ export default function Carousel({
               : "overflow-x-hidden"
           )}
           ref={containerRef}
+          onScroll={calcScrollPos}
         >
           <div
             className="flex"

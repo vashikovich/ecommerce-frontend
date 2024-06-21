@@ -7,15 +7,14 @@ import {
   GetCartQuery,
 } from "@/lib/queries";
 import { useMutation, useQuery } from "@apollo/client";
-import classNames from "classnames";
 import Image from "next/image";
-import AtcButton from "../components/product-card/AtcButton";
 import Button from "../components/Button";
 import TrashCanSvg from "@/../public/svg/trash-can.svg";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import LoadingSvg from "@/../public/svg/loading-spinner.svg";
 import { useEffect } from "react";
+import AtcButtonWrapper from "../components/product-card/AtcButtonWrapper";
 
 export default function CartPage() {
   const cartQuery = useQuery(GetCartQuery);
@@ -96,7 +95,7 @@ export default function CartPage() {
                     {i.product && (
                       <div className="flex justify-between items-center mt-2">
                         <div className="w-1/2">
-                          <AtcButton product={i.product} />
+                          <AtcButtonWrapper product={i.product} />
                         </div>
                         <Button
                           circular

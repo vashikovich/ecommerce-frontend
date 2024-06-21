@@ -6,10 +6,9 @@ import TrashCanSvg from "@/../public/svg/trash-can.svg";
 import { useContext, useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { ChangeCartProductQuantityMutation, GetCartQuery } from "@/lib/queries";
-import { extractCartFragment } from "@/lib/queries.utils";
 import { AuthContext } from "../providers/AuthProvider";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import LoadingSvg from "@/../public/svg/loading-spinner.svg";
 
 interface AtcButtonProps {
   product: Product;
@@ -46,12 +45,21 @@ export default function AtcButton({ product }: AtcButtonProps) {
 
   return (
     <div
-      className="h-10"
+      className="h-10 relative"
       onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();
       }}
     >
+      {changeQtyQuery.loading && (
+        <div className="absolute bg-black/30 w-full h-full">
+          <div className="flex justify-center items-center h-full">
+            <div className="w-8 h-8">
+              <LoadingSvg />
+            </div>
+          </div>
+        </div>
+      )}
       {quantity === 0 ? (
         <div
           className={classNames(

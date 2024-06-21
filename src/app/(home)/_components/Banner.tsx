@@ -9,6 +9,7 @@ const Banner = ({ image, title, subtitle, buttonLabel, buttonLink }) => {
         fill
         sizes="100vw"
         className="object-cover -z-50 rounded-lg"
+        priority
       />
       <div className="bg-black/50 flex flex-col justify-center items-center text-center p-4 h-full z-0 rounded-lg">
         <h2 className="text-3xl font-bold text-white">{title}</h2>

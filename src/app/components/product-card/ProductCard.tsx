@@ -1,8 +1,8 @@
 import { Product } from "@/__generated__/graphql";
 import Image from "next/image";
 import React from "react";
-import AtcButton from "./AtcButton";
 import Link from "next/link";
+import AtcButtonWrapper from "./AtcButtonWrapper";
 
 interface ProductCardProps {
   product: Product;
@@ -50,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
         {withoutAtc || (
           <div className="w-full mt-5">
-            <AtcButton product={product} />
+            <AtcButtonWrapper product={product} />
           </div>
         )}
       </div>

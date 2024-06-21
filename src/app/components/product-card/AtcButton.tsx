@@ -44,18 +44,15 @@ export default function AtcButton({ product }: AtcButtonProps) {
     });
   }
 
-  const render = () => {
-    if (!auth.user) {
-      return (
-        <div
-          className="flex items-center justify-center font-bold focus:outline-none rounded px-4 py-1 text-md border-blue-900 border-2 text-blue-900 hover:bg-blue-900 hover:text-white cursor-pointer h-full"
-          onClick={(e) => router.push("/user/login")}
-        >
-          <p>Buy</p>
-        </div>
-      );
-    } else if (quantity === 0) {
-      return (
+  return (
+    <div
+      className="h-10"
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      }}
+    >
+      {quantity === 0 ? (
         <div
           className={classNames(
             "flex items-center justify-center font-bold focus:outline-none rounded px-4 py-1 text-md h-full",
@@ -69,9 +66,7 @@ export default function AtcButton({ product }: AtcButtonProps) {
         >
           <p>{(product?.stock ?? 0) > 0 ? "Add to Cart" : "Out of Stock"}</p>
         </div>
-      );
-    } else {
-      return (
+      ) : (
         <div className="flex items-center justify-center font-bold focus:outline-none outline-none rounded text-md border-blue-900 border-2 text-blue-900 h-full">
           <div
             className="flex w-1/4 items-center justify-center font-bold focus:outline-none text-lg bg-blue-900 text-white border-blue-900 border-2 cursor-pointer h-full"
@@ -108,19 +103,7 @@ export default function AtcButton({ product }: AtcButtonProps) {
             +
           </div>
         </div>
-      );
-    }
-  };
-
-  return (
-    <div
-      className="h-10"
-      onClick={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-      }}
-    >
-      {render()}
+      )}
     </div>
   );
 }

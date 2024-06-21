@@ -5,7 +5,7 @@ import Input from "@/app/components/Input";
 import { AuthDispatchContext } from "@/app/components/providers/AuthProvider";
 import { login } from "@/lib/restApiHandlers";
 import classNames from "classnames";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Dispatch,
   FormEvent,
@@ -21,6 +21,9 @@ type Props = {
 
 export default function LoginEmailForm({ containerClassName }: Props) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get("returnUrl");
+
   const authDispatch = useContext(AuthDispatchContext);
 
   const [email, setEmail] = useState("");
@@ -53,7 +56,7 @@ export default function LoginEmailForm({ containerClassName }: Props) {
             refreshToken: response.tokenInfo.refreshToken,
           },
         });
-        router.push("/");
+        router.push(returnUrl || "/");
       }
     }
 

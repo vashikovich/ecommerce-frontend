@@ -1,8 +1,7 @@
 import Button from "@/app/components/Button";
-import Input from "@/app/components/Input";
 import GoogleSvg from "@/../public/svg/google.svg";
 import AppleSvg from "@/../public/svg/apple.svg";
-import Link from "next/link";
+import UseEmailButton from "./UseEmailButton";
 
 export default function LoginPage() {
   return (
@@ -32,11 +31,7 @@ export default function LoginPage() {
           fullWidth
         />
       </div>
-      <Link href="/user/login/email">
-        <p className="mb-8 text-blue-900 font-bold">
-          Sign in using email instead
-        </p>
-      </Link>
+      <UseEmailButton />
     </div>
   );
 }

@@ -60,11 +60,11 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
             <SearchBar />
           </div>
           <div className="flex justify-end ml-auto space-x-2 lg:hidden">
-            {/* {auth.user && ( */}
-            <div className="h-6 w-6" onClick={() => toggleModal("CART")}>
-              <CartSvg fill="white" />
-            </div>
-            {/* )} */}
+            {auth.user && (
+              <div className="h-6 w-6" onClick={() => toggleModal("CART")}>
+                <CartSvg fill="white" />
+              </div>
+            )}
             <div className="h-7 w-7" onClick={() => toggleModal("ACCOUNT")}>
               <AccountSvg fill="white" />
             </div>

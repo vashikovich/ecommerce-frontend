@@ -16,7 +16,7 @@ import { onError } from "@apollo/link-error";
 import { refresh } from "@/lib/restApiHandlers";
 import { Product } from "@/__generated__/graphql";
 import { createContext, useContext } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -166,13 +166,14 @@ export const ApolloContext = createContext<ApolloClient<unknown> | undefined>(
 export function ApolloProvider({ children }: React.PropsWithChildren) {
   const authDispatch = useContext(AuthDispatchContext);
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleAuthError = async () => {
     authDispatch({
       type: "CLEAR_AUTH",
     });
     await client.clearStore();
-    router.push("/");
+    router.push("/user/login?returnUrl=" + pathname);
   };
 
   const handleAuthRefresh = (auth: AuthType) => {

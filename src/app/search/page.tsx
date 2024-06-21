@@ -99,8 +99,15 @@ export default function SearchPage() {
           {resultsQuery.loading &&
             resultsQuery.networkStatus !== NetworkStatus.fetchMore &&
             Array(8).fill(<ProductCardSkeleton />)}
-          {results && Boolean(results?.length) && (
+          {results && Boolean(results.length) && (
             <SearchResults products={results} />
+          )}
+
+          {results && !Boolean(results.length) && (
+            <div className="flex flex-col justify-center items-center text-center col-span-full my-40">
+              <p className="text-xl">Your search returned no results.</p>{" "}
+              <p className="text-xl">Change keyword or change filter.</p>
+            </div>
           )}
         </div>
         {!resultsQuery.loading && hasMore && (

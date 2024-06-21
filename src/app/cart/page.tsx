@@ -15,6 +15,7 @@ import TrashCanSvg from "@/../public/svg/trash-can.svg";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import LoadingSvg from "@/../public/svg/loading-spinner.svg";
+import { useEffect } from "react";
 
 export default function CartPage() {
   const cartQuery = useQuery(GetCartQuery);
@@ -27,7 +28,12 @@ export default function CartPage() {
   const [createOrder, createOrderQuery] = useMutation(CreateOrderMutation, {
     refetchQueries: [GetCartQuery],
   });
-  console.log(cartQuery);
+
+  useEffect(() => {
+    if (createOrderQuery.data) {
+      router.push("/");
+    }
+  }, [createOrderQuery, router]);
 
   if (cartQuery.loading)
     return (
@@ -39,11 +45,6 @@ export default function CartPage() {
     );
 
   const cart = cartQuery.data?.cart as Cart;
-
-  const handlePlaceOrder = async () => {
-    await createOrder();
-    router.push("/");
-  };
 
   return (
     <div className="p-4 flex-col lg:max-w-screen-xl lg:mx-auto">
@@ -136,9 +137,17 @@ export default function CartPage() {
             </div>
             <Button
               fullWidth
-              content="Place Order"
+              content={
+                createOrderQuery.loading ? (
+                  <div className="w-6 h-6">
+                    <LoadingSvg />
+                  </div>
+                ) : (
+                  "Place Order"
+                )
+              }
               variant="secondary"
-              onClick={handlePlaceOrder}
+              onClick={() => createOrder()}
             />
           </div>
         )}

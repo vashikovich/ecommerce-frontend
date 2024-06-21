@@ -34,7 +34,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const baseClasses = classNames([
     "inline-flex items-center justify-center font-bold focus:outline-none",
-    fullWidth ? "w-full" : "w-fit",
+    fullWidth ? "w-full" : iconOnly ? "" : "w-fit",
     circular ? "rounded-full" : "rounded",
   ]);
 

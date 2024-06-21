@@ -28,7 +28,8 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     const persistedAuth = retrieveAuth();
-    dispatch({ type: "SAVE_AUTH", payload: persistedAuth });
+    if (persistedAuth.user)
+      dispatch({ type: "SAVE_AUTH", payload: persistedAuth });
   }, []);
 
   return (

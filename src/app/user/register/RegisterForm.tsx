@@ -14,6 +14,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import LoadingSvg from "@/../public/svg/loading-spinner.svg";
 
 type Props = {
   containerClassName?: string;
@@ -31,6 +32,7 @@ export default function RegisterForm({ containerClassName }: Props) {
     password: "",
   });
   const [serverError, setServerError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -41,7 +43,9 @@ export default function RegisterForm({ containerClassName }: Props) {
       setErrors: setClientErrors,
     });
     if (!errors.email && !errors.password) {
+      setLoading(true);
       const response = await register({ email, password });
+      setLoading(false);
       if (response.error) {
         setServerError(response.message);
       } else {
@@ -102,9 +106,17 @@ export default function RegisterForm({ containerClassName }: Props) {
         <p className="text-coral font-bold mb-4">{serverError}</p>
       )}
       <Button
-        content="Register"
+        content={
+          loading ? (
+            <div className="w-6 h-6">
+              <LoadingSvg />
+            </div>
+          ) : (
+            "Register"
+          )
+        }
         variant="primary"
-        onClick={handleSubmit}
+        onClick={(e) => loading || handleSubmit(e)}
         fullWidth
       />
     </div>

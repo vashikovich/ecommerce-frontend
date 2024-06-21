@@ -16,7 +16,6 @@ export default function LoginPage() {
       <p className="text-center mb-4">Sign in using:</p>
       <div className="flex flex-col lg:flex-row justify-center gap-4 w-full mb-4">
         <Button
-          content="Google"
           variant="ghost-primary"
           className="bg-white border-gray-900 text-gray-900 hover:bg-light-gray hover:border-gray-900"
           iconStart={
@@ -30,17 +29,19 @@ export default function LoginPage() {
               "_self"
             );
           }}
-        />
+        >
+          Google
+        </Button>
         {/* <Button
-          content="Apple"
           className="bg-gray-900 border-gray-900 text-white hover:bg-medium-gray hover:border-medium-gray"
           iconStart={
             <div className="w-6 h-6">
               <AppleSvg fill="white" />
             </div>
           }
-          fullWidth
-        /> */}
+        >
+          Apple
+        </Button> */}
       </div>
       <Link
         href={`/user/login/email${returnUrl ? `?returnUrl=${returnUrl}` : ""}`}

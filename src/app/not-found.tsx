@@ -8,7 +8,7 @@ export default function App_NotFound() {
         The page you are looking for does not exist
       </h1>
       <Link href="/">
-        <Button content="Continue Shopping" variant="primary" />
+        <Button variant="primary">Continue Shopping</Button>
       </Link>
     </div>
   );

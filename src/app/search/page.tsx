@@ -77,11 +77,9 @@ export default function SearchPage() {
                 paginatedProduct={paginatedProduct}
               />
               <div className="fixed p-4 bottom-0 bg-white w-full">
-                <Button
-                  content="Apply"
-                  fullWidth
-                  onClick={() => setShowFilterModal(false)}
-                />
+                <Button fullWidth onClick={() => setShowFilterModal(false)}>
+                  Apply
+                </Button>
               </div>
             </div>
           ) : (
@@ -120,17 +118,16 @@ export default function SearchPage() {
       {paginatedProduct && (
         <div className="fixed lg:hidden bottom-5 right-5">
           <Button
-            content={
-              <div className="w-6 h-6">
-                <FilterSvg fill="white" />
-              </div>
-            }
             size="large"
             variant="primary"
             circular
             iconOnly
             onClick={() => setShowFilterModal(true)}
-          />
+          >
+            <div className="w-6 h-6">
+              <FilterSvg fill="white" />
+            </div>
+          </Button>
         </div>
       )}
     </div>

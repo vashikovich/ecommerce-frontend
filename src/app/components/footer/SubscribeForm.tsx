@@ -10,7 +10,9 @@ export default function SubscribeForm() {
 
   const handleSubmit = async () => {
     await subscribe({ email });
-    alert("That's great, you have been subscribed to our newsletter! Please check your email");
+    alert(
+      "That's great, you have been subscribed to our newsletter! Please check your email"
+    );
   };
 
   return (
@@ -25,8 +27,9 @@ export default function SubscribeForm() {
       <Button
         onClick={handleSubmit}
         className="w-full bg-coral text-white py-2 px-4 rounded hover:bg-blue-900"
-        content="Subscribe"
-      />
+      >
+        Subscribe
+      </Button>
     </div>
   );
 }

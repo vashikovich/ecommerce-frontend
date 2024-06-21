@@ -55,7 +55,7 @@ export default function CartPage() {
             <div className="flex flex-col items-center mx-auto gap-20 py-20">
               <p>You have not added anything yet</p>
               <Link href="/">
-                <Button content="Continue Shopping" />
+                <Button>Continue Shopping</Button>
               </Link>
             </div>
           ) : (
@@ -103,11 +103,6 @@ export default function CartPage() {
                           iconOnly
                           variant="ghost-primary"
                           size="small"
-                          content={
-                            <div className="w-4 h-4">
-                              <TrashCanSvg />
-                            </div>
-                          }
                           onClick={() =>
                             changeQty({
                               variables: {
@@ -116,7 +111,11 @@ export default function CartPage() {
                               },
                             })
                           }
-                        />
+                        >
+                          <div className="w-4 h-4">
+                            <TrashCanSvg />
+                          </div>
+                        </Button>
                       </div>
                     )}
                   </div>
@@ -135,20 +134,15 @@ export default function CartPage() {
                 </p>
               </div>
             </div>
-            <Button
-              fullWidth
-              content={
-                createOrderQuery.loading ? (
-                  <div className="w-6 h-6">
-                    <LoadingSvg />
-                  </div>
-                ) : (
-                  "Place Order"
-                )
-              }
-              variant="secondary"
-              onClick={() => createOrder()}
-            />
+            <Button fullWidth variant="secondary" onClick={() => createOrder()}>
+              {createOrderQuery.loading ? (
+                <div className="w-6 h-6">
+                  <LoadingSvg />
+                </div>
+              ) : (
+                "Place Order"
+              )}
+            </Button>
           </div>
         )}
       </div>

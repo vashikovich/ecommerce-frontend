@@ -8,7 +8,7 @@ export default function OrderDetailsPage_NotFound() {
         Order does not exist or you are not authorized.
       </h1>
       <Link href="/">
-        <Button content="Continue Shopping" variant="primary" />
+        <Button variant="primary">Continue Shopping</Button>
       </Link>
     </div>
   );

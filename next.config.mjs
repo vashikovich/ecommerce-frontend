@@ -5,6 +5,14 @@ const nextConfig = {
             protocol: 'https',
             hostname: 'cdn-endpoint-website.azureedge.net',
             pathname: '**'
+        }, {
+            protocol: 'https',
+            hostname: 'plus.unsplash.com',
+            pathname: '**'
+        }, {
+            protocol: 'https',
+            hostname: 'images.unsplash.com',
+            pathname: '**'
         }]
     },
     webpack: config => {

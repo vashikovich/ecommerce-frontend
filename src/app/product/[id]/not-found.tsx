@@ -9,7 +9,7 @@ export default function ProductPage_NotFound() {
         removed.
       </h1>
       <Link href="/">
-        <Button content="Continue Shopping" variant="primary" />
+        <Button variant="primary">Continue Shopping</Button>
       </Link>
     </div>
   );

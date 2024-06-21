@@ -11,7 +11,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "ghost-secondary"
     | "ghost-white"
     | "text";
-  content: ReactNode;
   fullWidth?: boolean;
   iconStart?: React.ReactNode;
   iconEnd?: React.ReactNode;
@@ -23,7 +22,6 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button: React.FC<ButtonProps> = ({
   size = "medium",
   variant = "primary",
-  content,
   fullWidth = false,
   iconStart = null,
   iconEnd = null,
@@ -78,7 +76,7 @@ const Button: React.FC<ButtonProps> = ({
       {...props}
     >
       {iconStart && <span className="mr-2">{iconStart}</span>}
-      {content}
+      {props.children}
       {iconEnd && <span className="ml-2">{iconEnd}</span>}
     </button>
   );

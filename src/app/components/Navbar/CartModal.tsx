@@ -64,14 +64,15 @@ export default function CartModal({
             </div>
             <div className="flex justify-center">
               <Button
-                content="View Cart"
                 variant="secondary"
                 fullWidth
                 onClick={(e) => {
                   router.push("/cart");
                   onDismissModal(e);
                 }}
-              />
+              >
+                View Cart
+              </Button>
             </div>
           </>
         )}

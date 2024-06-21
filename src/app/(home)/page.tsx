@@ -33,9 +33,11 @@ const HomePage = async () => {
   return (
     <main className="min-h-screen flex flex-col max-w-screen-xl mx-auto gap-6">
       <Banner
-        title="Welcome to Our Store"
-        subtitle="Get the best products here"
-        buttonLabel="Shop Now"
+        image="https://plus.unsplash.com/premium_photo-1661420226112-311050ce30da?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        title="Reduce Carbon, Choose Local!"
+        subtitle="You can help the environment by helping the people around you"
+        buttonLabel="Browse"
+        buttonLink="/search?f=lc"
       />
 
       <section className="py-8">
@@ -55,9 +57,11 @@ const HomePage = async () => {
       </section>
 
       <Banner
-        title="Special Offer"
-        subtitle="Up to 50% off on selected items"
-        buttonLabel="Check It Out"
+        image="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        title="It's Peak Season!"
+        subtitle="Grab these while they are abundant"
+        buttonLabel="Grab 'em"
+        buttonLink="/search?f=pk"
       />
 
       <section className="py-8">

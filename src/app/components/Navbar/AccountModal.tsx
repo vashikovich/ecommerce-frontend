@@ -69,7 +69,9 @@ export default function AccountModal({
         ) : (
           <div className="flex flex-col gap-4">
             <Link href="/user/login" onClick={onDismissModal}>
-              <Button content="Sign In" variant="ghost-primary" fullWidth />
+              <Button variant="ghost-primary" fullWidth>
+                Sign In
+              </Button>
             </Link>
           </div>
         )}

@@ -106,19 +106,18 @@ export default function RegisterForm({ containerClassName }: Props) {
         <p className="text-coral font-bold mb-4">{serverError}</p>
       )}
       <Button
-        content={
-          loading ? (
-            <div className="w-6 h-6">
-              <LoadingSvg />
-            </div>
-          ) : (
-            "Register"
-          )
-        }
         variant="primary"
         onClick={(e) => loading || handleSubmit(e)}
         fullWidth
-      />
+      >
+        {loading ? (
+          <div className="w-6 h-6">
+            <LoadingSvg />
+          </div>
+        ) : (
+          "Register"
+        )}
+      </Button>
     </div>
   );
 }

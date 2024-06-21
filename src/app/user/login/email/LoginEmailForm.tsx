@@ -50,7 +50,7 @@ export default function LoginEmailForm({ containerClassName }: Props) {
       setLoading(true);
       const response = await login({ email, password });
       setLoading(false);
-      
+
       if (response.error) {
         setServerError(response.message);
       } else {
@@ -119,19 +119,18 @@ export default function LoginEmailForm({ containerClassName }: Props) {
         <p className="text-coral font-bold mb-4">{serverError}</p>
       )}
       <Button
-        content={
-          loading ? (
-            <div className="w-6 h-6">
-              <LoadingSvg />
-            </div>
-          ) : (
-            "Sign In"
-          )
-        }
         variant="primary"
         onClick={(e) => loading || handleSubmit(e)}
         fullWidth
-      />
+      >
+        {loading ? (
+          <div className="w-6 h-6">
+            <LoadingSvg />
+          </div>
+        ) : (
+          "Sign In"
+        )}
+      </Button>
     </div>
   );
 }

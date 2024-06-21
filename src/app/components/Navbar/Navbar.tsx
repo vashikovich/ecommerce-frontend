@@ -76,24 +76,20 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
                   className="flex gap-2"
                   variant="ghost-white"
                   circular
-                  content="Cart"
                   onClick={() => toggleModal("CART")}
                   iconStart={
                     <div className="h-6 w-6">
                       <CartSvg fill="white" />
                     </div>
                   }
-                />
+                >
+                  Cart
+                </Button>
                 <Button
                   className="flex gap-2"
                   variant="ghost-white"
                   circular
                   onClick={() => toggleModal("ACCOUNT")}
-                  content={
-                    <div className="overflow-hidden text-ellipsis max-w-20">
-                      {(auth.user.displayName ?? auth.user.email).slice()}
-                    </div>
-                  }
                   iconStart={
                     <div className="h-7 w-7">
                       <AccountSvg fill="white" />
@@ -104,11 +100,15 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
                       <ChevronSvg />
                     </div>
                   }
-                />
+                >
+                  <div className="overflow-hidden text-ellipsis max-w-20">
+                    {(auth.user.displayName ?? auth.user.email).slice()}
+                  </div>
+                </Button>
               </>
             ) : (
               <Link href="/user/login">
-                <Button content="Sign in" variant="secondary" />
+                <Button variant="secondary">Sign in</Button>
               </Link>
             )}
           </div>

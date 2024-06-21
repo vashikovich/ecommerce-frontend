@@ -61,12 +61,9 @@ export default function RegisterPage() {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <Button
-          content="Save"
-          variant="primary"
-          onClick={handleSubmit}
-          fullWidth
-        />
+        <Button variant="primary" onClick={handleSubmit} fullWidth>
+          Save
+        </Button>
       </div>
     </div>
   );

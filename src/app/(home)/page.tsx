@@ -1,10 +1,11 @@
+export const dynamic = "force-static"
+
 import Banner from "./_components/Banner";
 import ProductCard from "../components/product-card/ProductCard";
 import { query } from "@/lib/apollo-client";
 import Carousel from "../components/Carousel";
 import { SearchProductsQuery } from "@/lib/queries";
 import { extractProductsFragment } from "@/lib/queries.utils";
-import ProductCardSkeleton from "../components/skeletons/ProductCardSkeleton";
 
 const HomePage = async () => {
   const localProductsQuery = await query({

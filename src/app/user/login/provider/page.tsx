@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import { AuthDispatchContext } from "@/app/components/providers/AuthProvider";
 import { AuthResponse } from "@/lib/definitions";

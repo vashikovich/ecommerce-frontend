@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import {
   PaginatedProduct,
@@ -63,7 +64,12 @@ export default function SearchPage() {
         )}
       >
         {paginatedProduct ? (
-          <SearchFilters params={params} paginatedProduct={paginatedProduct} />
+          <Suspense>
+            <SearchFilters
+              params={params}
+              paginatedProduct={paginatedProduct}
+            />
+          </Suspense>
         ) : (
           <SearchFiltersSkeleton />
         )}
@@ -72,10 +78,12 @@ export default function SearchPage() {
         <div className="fixed w-full h-full z-10 bg-white overflow-scroll overscroll-contain pb-52 lg:hidden">
           {paginatedProduct ? (
             <div>
-              <SearchFilters
-                params={params}
-                paginatedProduct={paginatedProduct}
-              />
+              <Suspense>
+                <SearchFilters
+                  params={params}
+                  paginatedProduct={paginatedProduct}
+                />
+              </Suspense>
               <div className="fixed p-4 bottom-0 bg-white w-full">
                 <Button fullWidth onClick={() => setShowFilterModal(false)}>
                   Apply

@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import { Cart } from "@/__generated__/graphql";
 import {

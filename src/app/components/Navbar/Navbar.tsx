@@ -10,7 +10,7 @@ import CartModal from "./CartModal";
 import AccountModal from "./AccountModal";
 import CategoryModal from "./CategoryModal";
 import Button from "@/app/components/Button";
-import { useContext, useState } from "react";
+import { Suspense, useContext, useState } from "react";
 import Link from "next/link";
 import { AuthContext } from "../providers/AuthProvider";
 import { Category } from "@/__generated__/graphql";
@@ -57,7 +57,9 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
             </div>
           </div>
           <div className="flex-1 hidden lg:flex justify-center items-center h-14 lg:h-20 w-1/2">
-            <SearchBar />
+            <Suspense>
+              <SearchBar />
+            </Suspense>
           </div>
           <div className="flex justify-end ml-auto space-x-2 lg:hidden">
             {auth.user && (
@@ -115,7 +117,9 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
         </div>
         {modalOpen === "NONE" && (
           <div className="px-4 py-3 flex justify-center lg:hidden bg-white">
-            <SearchBar />
+            <Suspense>
+              <SearchBar />
+            </Suspense>
           </div>
         )}
         <div className="hidden lg:block">

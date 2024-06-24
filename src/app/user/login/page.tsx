@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import Button from "@/app/components/Button";
 import GoogleSvg from "@/../public/svg/google.svg";

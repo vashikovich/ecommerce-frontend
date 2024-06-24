@@ -46,11 +46,6 @@ export default function Carousel({
       ) <
       0.1 * contentWidth;
     if (isFarRight) pos.push("FAR_RIGHT");
-    console.log(
-      containerRef.current.scrollLeft,
-      containerRef.current.scrollWidth,
-      containerRef.current.clientWidth
-    );
     setScrollPos(pos);
   };
 

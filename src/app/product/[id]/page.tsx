@@ -13,6 +13,7 @@ import { PaginatedProductFragment } from "@/lib/fragments";
 import ProductCard from "@/app/components/product-card/ProductCard";
 import { notFound } from "next/navigation";
 import AtcButtonWrapper from "@/app/components/product-card/AtcButtonWrapper";
+import { Metadata } from "next";
 
 export default async function ProductPage({
   params,
@@ -155,4 +156,20 @@ export default async function ProductPage({
   } catch (e) {
     return notFound();
   }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const productQuery = await query({
+    query: GetProductDetailsQuery,
+    variables: { id: params.id },
+  });
+
+  const product = productQuery.data.product as Product;
+  return {
+    title: product.name,
+  };
 }
